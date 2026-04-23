@@ -48,4 +48,6 @@ private:
 
 	// ƒXƒNƒ[ƒ‹
 	float	M_ScrollX;
+
+	int test;
 };
