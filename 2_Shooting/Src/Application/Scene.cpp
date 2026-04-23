@@ -179,7 +179,7 @@ void Scene::Update()
 			stage = 2;
 		}
 
-		
+		M_Player.Update();
 
 			//スペースキーで弾発射
 			if (GetAsyncKeyState(VK_SPACE) & 0x8000)
@@ -194,8 +194,8 @@ void Scene::Update()
 							bulletFlg[bu] = 1;	//発射状態に
 
 							//弾の座標を自機の座標にセット
-							bulletX[bu] = playerX;
-							bulletY[bu] = playerY;
+							bulletX[bu] = M_Player.GetPos().x;
+							bulletY[bu] = M_Player.GetPos().y;
 
 							shotWait = 10;		//待機時間10フレーム
 
@@ -220,23 +220,23 @@ void Scene::Update()
 					enemyY[e] = rand() % (720 + 1 - 48) + (360 - 24);
 				}
 
-				if (playerFlg == 1)
+				//if (playerFlg == 1)
 				{
 					//自機との当たり判定
-					float a = enemyX[e] - playerX;  //底辺(X座標の差)
-					float b = enemyY[e] - playerY;  //高さ(Y座標の差)
+					float a = enemyX[e] - M_Player.GetPos().x;  //底辺(X座標の差)
+					float b = enemyY[e] - M_Player.GetPos().y;  //高さ(Y座標の差)
 					float c = sqrt(a * a + b * b);  //斜辺(sqrt→ルート)
 
-					if (c < playerRadius + enemyRadius[e])
+					if (c < M_Player.GetRadiusX() + enemyRadius[e])
 					{
 						//敵を倒す
 						enemyFlg[e] = 0;
 
 						//自機のHPを減らす
-						playerHp -= 1;
+						//playerHp -= 1;
 
 						//爆発発生
-						Explosion(playerX, playerY);
+						Explosion(M_Player.GetPos().x, M_Player.GetPos().y);
 
 						cnt++;
 					}
@@ -378,22 +378,22 @@ void Scene::Update()
 				}
 
 				//敵の弾と自機の当たり判定
-				if (playerFlg == 1)
+				if (M_Player.GetAlive() == true)
 				{
-					float a = T_bulletX[Tbu] - playerX;  //底辺(X座標の差)
-					float b = T_bulletY[Tbu] - playerY;  //高さ(Y座標の差)
+					float a = T_bulletX[Tbu] - M_Player.GetPos().x;  //底辺(X座標の差)
+					float b = T_bulletY[Tbu] - M_Player.GetPos().y;  //高さ(Y座標の差)
 					float c = sqrt(a * a + b * b);  //斜辺(sqrt→ルート)
 
-					if (c < playerRadius + T_bulletRadius[Tbu])
+					if (c < M_Player.GetRadiusX() + T_bulletRadius[Tbu])
 					{
 						//弾を消す
 						T_bulletFlg[Tbu] = 0;
 
 						//自機のHPを減らす
-						playerHp -= 1;
+						//M_Player.GetHp() = -1;
 
 						//爆発発生
-						Explosion(playerX, playerY);
+						Explosion(M_Player.GetPos().x, M_Player.GetPos().x);
 					}
 				}
 			}
@@ -473,22 +473,22 @@ void Scene::Update()
 				}
 
 				//敵の弾と自機の当たり判定
-				if (playerFlg == 1)
+				if (M_Player.GetAlive() == true)
 				{
-					float a = R_bulletX[Rbu] - playerX;  //底辺(X座標の差)
-					float b = R_bulletY[Rbu] - playerY;  //高さ(Y座標の差)
+					float a = R_bulletX[Rbu] - M_Player.GetPos().x;  //底辺(X座標の差)
+					float b = R_bulletY[Rbu] - M_Player.GetPos().y;  //高さ(Y座標の差)
 					float c = sqrt(a * a + b * b);  //斜辺(sqrt→ルート)
 
-					if (c < playerRadius + R_bulletRadius[Rbu])
+					if (c < M_Player.GetRadiusX() + R_bulletRadius[Rbu])
 					{
 						//弾を消す
 						R_bulletFlg[Rbu] = 0;
 
 						//自機のHPを減らす
-						playerHp -= 1;
+						//playerHp -= 1;
 
 						//爆発発生
-						Explosion(playerX, playerY);
+						Explosion(M_Player.GetPos().x, M_Player.GetPos().y);
 					}
 				}
 			}
@@ -506,22 +506,22 @@ void Scene::Update()
 				}
 
 				//敵の弾と自機の当たり判定
-				if (playerFlg == 1)
+				if (M_Player.GetAlive() == true)
 				{
-					float a = RR_bulletX[Rbu] - playerX;  //底辺(X座標の差)
-					float b = RR_bulletY[Rbu] - playerY;  //高さ(Y座標の差)
+					float a = RR_bulletX[Rbu] - M_Player.GetPos().x;  //底辺(X座標の差)
+					float b = RR_bulletY[Rbu] - M_Player.GetPos().y;  //高さ(Y座標の差)
 					float c = sqrt(a * a + b * b);  //斜辺(sqrt→ルート)
 
-					if (c < playerRadius + RR_bulletRadius[Rbu])
+					if (c < M_Player.GetRadiusX() + RR_bulletRadius[Rbu])
 					{
 						//弾を消す
 						RR_bulletFlg[Rbu] = 0;
 
 						//自機のHPを減らす
-						playerHp -= 1;
+						//playerHp -= 1;
 
 						//爆発発生
-						Explosion(playerX, playerY);
+						Explosion(M_Player.GetPos().x, M_Player.GetPos().y);
 					}
 				}
 			}
@@ -539,22 +539,22 @@ void Scene::Update()
 				}
 
 				//敵の弾と自機の当たり判定
-				if (playerFlg == 1)
+				if (M_Player.GetAlive() == true)
 				{
-					float a = RL_bulletX[Rbu] - playerX;  //底辺(X座標の差)
-					float b = RL_bulletY[Rbu] - playerY;  //高さ(Y座標の差)
+					float a = RL_bulletX[Rbu] - M_Player.GetPos().x;  //底辺(X座標の差)
+					float b = RL_bulletY[Rbu] - M_Player.GetPos().y;  //高さ(Y座標の差)
 					float c = sqrt(a * a + b * b);  //斜辺(sqrt→ルート)
 
-					if (c < playerRadius + RL_bulletRadius[Rbu])
+					if (c < M_Player.GetRadiusX() + RL_bulletRadius[Rbu])
 					{
 						//弾を消す
 						RL_bulletFlg[Rbu] = 0;
 
 						//自機のHPを減らす
-						playerHp -= 1;
+						//playerHp -= 1;
 
 						//爆発発生
-						Explosion(playerX, playerY);
+						Explosion(M_Player.GetPos().x, M_Player.GetPos().y);
 					}
 				}
 			}
@@ -624,41 +624,41 @@ void Scene::Update()
 			}
 		}
 
-		//自機のHPチェック
-		if (playerHp <= 0 && playerFlg == 1)
-		{
-			//自機死亡
-			playerFlg = 0;
+		////自機のHPチェック
+		//if (playerHp <= 0 && playerFlg == 1)
+		//{
+		//	//自機死亡
+		//	playerFlg = 0;
 
-			//爆発発生
-			Explosion(playerX, playerY);
+		//	//爆発発生
+		//	Explosion(playerX, playerY);
 
-			//ゲームオーバーを表示
-			GAMEOVERFlg = 1;
-		}
+		//	//ゲームオーバーを表示
+		//	GAMEOVERFlg = 1;
+		//}
 
 
 		//中ボス
-		if (playerFlg == 1)
+		if (M_Player.GetAlive() == true)
 		{
 			//自機と当たり判定
-			float a = TbossX - playerX;		//底辺(X座標の差)
-			float b = TbossY - playerY;		//高さ(Y座標の差)
+			float a = TbossX - M_Player.GetPos().x;		//底辺(X座標の差)
+			float b = TbossY - M_Player.GetPos().y;		//高さ(Y座標の差)
 			float c = sqrt(a * a + b * b);	//斜辺(sqrt →　ルート)
 
-			if (c < playerRadius + TbossRadius)	//衝突していたら(斜辺 < 半径 + 半径)
+			if (c < M_Player.GetRadiusX() + TbossRadius)	//衝突していたら(斜辺 < 半径 + 半径)
 			{
 				//ボスのHPを-1
 				TbossHp -= 1;
 
 				//自機死亡
-				playerFlg = 0;
+				//playerFlg = 0;
 
 				//ゲームオーバー表示
 				GAMEOVERFlg = 1;
 
 				//爆発発生
-				Explosion(playerX, playerY);
+				Explosion(M_Player.GetPos().x, M_Player.GetPos().y);
 			}
 		}
 
@@ -836,12 +836,6 @@ void Scene::Update()
 		}
 
 		//updateの最後に行列作成↓↓
-		//自機
-		Math::Matrix p_trans = Math::Matrix::CreateTranslation(playerX, playerY, 0); //移動行列
-
-		Math::Matrix p_scale = Math::Matrix::CreateScale(playerSize, playerSize, 0); //拡縮行列
-
-		charaMat = p_scale * p_trans; //拡縮　*　移動
 
 		//敵
 		for (int e = 0;e < 30;e++)
@@ -933,7 +927,7 @@ void Scene::Update()
 		GAMECLEARMat = GAMECLEAR_scale * GAMECLEAR_trans;
 
 		//自機のライフ
-		if (playerHp >= 3)
+		/*if (playerHp >= 3)
 		{
 			Math::Matrix Life3_trans = Math::Matrix::CreateTranslation(Life3X, Life1Y, 0);
 
@@ -956,21 +950,23 @@ void Scene::Update()
 			Math::Matrix Life1_scale = Math::Matrix::CreateScale(Life1Size, Life1Size, 0);
 
 			Life1Mat = Life1_scale * Life1_trans;
-		}
-	}
+		}*/
 
 	//背景スクロール
-	backX -= 10;
+	//backX -= 10;
 
-	if (backX < -1280)
-	{
-		backX = 0;
-	}
+	//if (backX < -1280)
+	//{
+	//	backX = 0;
+	//}
 
-	//背景
-	backMat1 = Math::Matrix::CreateTranslation(backX, 0, 0);
-	backMat2 = Math::Matrix::CreateTranslation(backX + 1280, 0, 0);
+	////背景
+	//backMat1 = Math::Matrix::CreateTranslation(backX, 0, 0);
+	//backMat2 = Math::Matrix::CreateTranslation(backX + 1280, 0, 0);
 }
+
+	
+
 
 void Scene::Init()
 {
@@ -979,7 +975,7 @@ void Scene::Init()
 	srand(time(0));
 
 	// 画像の読み込み処理
-	charaTex.Load("Texture/Mini Pixel Pack 3/Player ship/Player_ship (16 x 16).png");
+	//charaTex.Load("Texture/Mini Pixel Pack 3/Player ship/Player_ship (16 x 16).png");
 	backTex.Load("Texture/Mini Pixel Pack 3/Space_BG (2 frames) (64 x 64).png");
 	enemyTex.Load("Texture/Mini Pixel Pack 3/Enemies/Bon_Bon (16 x 16).png");
 	bulletTex.Load("Texture/Mini Pixel Pack 3/Projectiles/Player_beam (16 x 16).png");
@@ -994,12 +990,7 @@ void Scene::Init()
 	GAMESTARTTex.Load("Texture/Mini Pixel Pack 3/UI objects/START (48 x 8).png");
 
 	//自機の初期化処理
-	playerFlg = 1;
-	playerX = 0;
-	playerY = -300;
-	playerSize = 3;
-	playerRadius = 8 * playerSize;
-	playerHp = 3;
+	M_Player.Init();
 
 	//敵の初期化処理
 	for (int e = 0;e < 30;e++)
@@ -1142,7 +1133,7 @@ void Scene::Init()
 void Scene::Release()
 {
 	// 画像の解放処理
-	charaTex.Release();
+	//charaTex.Release();
 	backTex.Release();
 	enemyTex.Release();
 	bulletTex.Release();
@@ -1177,10 +1168,7 @@ void Scene::RESET()
 		stage = 1;
 
 		//自機
-		playerFlg = 1;
-		playerX = 0;
-		playerY = -300;
-		playerHp = 3;
+		M_Player.Init();
 
 		//敵
 		for (int e = 0; e < 30; e++)

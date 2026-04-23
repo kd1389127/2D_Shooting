@@ -2,7 +2,8 @@
 
 C_Player::C_Player()
 {
-
+	M_Hp = 6;
+	M_MaxHp = 6;
 }
 
 C_Player::~C_Player()
@@ -28,6 +29,16 @@ void C_Player::Update()
 
 	//M_ScrollX = M_Pos.x;
 
+	// 無敵時間のカウントダウン
+	const float delta = 1.0f / 60.0f;
+	if (M_IsInvincible) {
+		M_InvincibleTime -= delta;
+		if (M_InvincibleTime <= 0.0f) {
+			M_IsInvincible = false;
+			M_InvincibleTime = 0.0f;
+		}
+	}
+
 	M_ScaleMat = Math::Matrix::CreateScale(M_ScaleX, M_ScaleY, 1.0F);
 	M_TransMat = Math::Matrix::CreateTranslation(M_Pos.x - M_ScrollX, M_Pos.y, 0);
 	M_Mat = M_ScaleMat * M_TransMat;	// 拡大×回転×移動
@@ -42,6 +53,16 @@ void C_Player::Draw()
 	{
 		SHADER.m_spriteShader.SetMatrix(M_Mat);
 		SHADER.m_spriteShader.DrawTex(&M_Tex, Math::Rectangle{ 16,0,16,16 }, 1.0f);
+	}
+
+	// 無敵中は点滅（5フレームごとに描画スキップ）
+	if (M_IsInvincible) {
+		static int blinkFrame = 0;
+		blinkFrame++;
+		if ((blinkFrame / 5) % 2 == 0) {
+			// 描画スキップ
+			return;
+		}
 	}
 }
 
@@ -85,4 +106,27 @@ void C_Player::Action()
 		M_Move.y = -360 + 24;
 	}
 
+}
+
+void C_Player::TakeDamage(int dmg)
+{
+	if (M_IsInvincible || !M_Alive)
+	{
+		M_DamageFlg = false;
+		return;
+	}
+
+	M_Hp -= dmg;
+	M_DamageFlg = true;
+	if (M_Hp < 0) M_Hp = 0;
+
+	if (M_Hp <= 0)
+	{
+		M_Alive = false;
+		return;
+	}
+
+	// 無敵状態にする
+	M_IsInvincible = true;
+	M_InvincibleTime = 1.0f; // 1秒間無敵
 }
