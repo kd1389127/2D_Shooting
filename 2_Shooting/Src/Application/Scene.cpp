@@ -154,6 +154,14 @@ void Scene::Draw()
 	}
 }
 
+void Scene::Action()
+{
+	if (GAMESTARTFlg == 1)
+	{
+		//M_Player.Action();
+	}
+}
+
 void Scene::Update()
 {
 
@@ -954,24 +962,16 @@ void Scene::Update()
 		}*/
 
 	//îwåiÉXÉNÉçÅ[Éã
-	//backX -= 10;
+	backX -= 4;
 
-	//if (backX < -1280)
-	//{
-	//	backX = 0;
-	//}
-
-	////îwåi
-	//backMat1 = Math::Matrix::CreateTranslation(backX, 0, 0);
-	//backMat2 = Math::Matrix::CreateTranslation(backX + 1280, 0, 0);
-}
-
-void Scene::Action()
-{
-	if (GAMESTARTFlg == 1)
+	if (backX < -1280)
 	{
-		M_Player.Action();
+		backX = 0;
 	}
+
+	//îwåi
+	backMat1 = Math::Matrix::CreateTranslation(backX, 0, 0);
+	backMat2 = Math::Matrix::CreateTranslation(backX + 1280, 0, 0);
 }
 
 void Scene::Init()
