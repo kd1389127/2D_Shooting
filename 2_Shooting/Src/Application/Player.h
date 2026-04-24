@@ -26,8 +26,10 @@ public:
 	bool GetAlive() { return M_Alive; }
 	bool GetDamageFlg() { return M_DamageFlg; }
 
+	void SetStandTex(KdTexture* A_Tex);
+
 private:
-	KdTexture M_Tex;
+	KdTexture* M_Tex;		// 画像のポインタ
 
 	Math::Matrix	M_ScaleMat;		// 拡大行列
 	Math::Matrix	M_TransMat;		// 移動行列
@@ -49,5 +51,5 @@ private:
 	// スクロール
 	float	M_ScrollX;
 
-	int test;
+	
 };

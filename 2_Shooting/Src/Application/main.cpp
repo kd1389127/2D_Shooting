@@ -203,7 +203,7 @@ void Application::Execute()
 
 		// ƒQ[ƒ€•`‰æˆ—
 		SHADER.m_spriteShader.Begin();
-		SCENE.Draw2D();
+		SCENE.Draw();
 		SHADER.m_spriteShader.End();
 
 

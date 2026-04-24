@@ -11,6 +11,8 @@ enum SceneType
 
 class Scene
 {
+	C_Player* GetPlayer() { return &M_Player; }				// プレイヤー
+
 private:
 
 	//プレイヤー
@@ -189,7 +191,9 @@ public:
 	void Update();
 
 	// 描画処理
-	void Draw2D();
+	void Draw();
+
+	void Action();
 
 	// GUI処理
 	void ImGuiUpdate();
@@ -199,8 +203,6 @@ public:
 
 	//爆発
 	void Explosion(float X, float Y);
-
-	C_Player* GetPlayer() { return &M_Player; }
 
 private:
 

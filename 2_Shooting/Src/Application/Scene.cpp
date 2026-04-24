@@ -1,7 +1,7 @@
 #include "main.h"
 #include "Scene.h"
 
-void Scene::Draw2D()
+void Scene::Draw()
 {
 	//”wŒi(‚P–‡–Ú)
 	SHADER.m_spriteShader.SetMatrix(backMat1);
@@ -180,6 +180,7 @@ void Scene::Update()
 		}
 
 		M_Player.Update();
+		M_Player.Action();
 
 			//ƒXƒy[ƒXƒL[‚Å’e”­Ë
 			if (GetAsyncKeyState(VK_SPACE) & 0x8000)
@@ -965,8 +966,13 @@ void Scene::Update()
 	//backMat2 = Math::Matrix::CreateTranslation(backX + 1280, 0, 0);
 }
 
-	
-
+void Scene::Action()
+{
+	if (GAMESTARTFlg == 1)
+	{
+		M_Player.Action();
+	}
+}
 
 void Scene::Init()
 {
@@ -975,7 +981,7 @@ void Scene::Init()
 	srand(time(0));
 
 	// ‰æ‘œ‚Ì“Ç‚İ‚İˆ—
-	//charaTex.Load("Texture/Mini Pixel Pack 3/Player ship/Player_ship (16 x 16).png");
+	M_PlayerTex.Load("Texture/Mini Pixel Pack 3/Player ship/Player_ship (16 x 16).png");
 	backTex.Load("Texture/Mini Pixel Pack 3/Space_BG (2 frames) (64 x 64).png");
 	enemyTex.Load("Texture/Mini Pixel Pack 3/Enemies/Bon_Bon (16 x 16).png");
 	bulletTex.Load("Texture/Mini Pixel Pack 3/Projectiles/Player_beam (16 x 16).png");
@@ -991,6 +997,7 @@ void Scene::Init()
 
 	//©‹@‚Ì‰Šú‰»ˆ—
 	M_Player.Init();
+	M_Player.SetStandTex(&M_PlayerTex);
 
 	//“G‚Ì‰Šú‰»ˆ—
 	for (int e = 0;e < 30;e++)
@@ -1133,7 +1140,7 @@ void Scene::Init()
 void Scene::Release()
 {
 	// ‰æ‘œ‚Ì‰ğ•úˆ—
-	//charaTex.Release();
+	M_PlayerTex.Release();
 	backTex.Release();
 	enemyTex.Release();
 	bulletTex.Release();
@@ -1169,6 +1176,7 @@ void Scene::RESET()
 
 		//©‹@
 		M_Player.Init();
+		M_Player.SetStandTex(&M_PlayerTex);
 
 		//“G
 		for (int e = 0; e < 30; e++)

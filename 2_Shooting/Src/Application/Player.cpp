@@ -13,8 +13,7 @@ C_Player::~C_Player()
 
 void C_Player::Init()
 {
-	M_Pos = { 0,0 };
-	M_Move = { 0,0 };
+	M_Pos = { 0,-200 };
 	M_Alive = true;
 	M_ScaleX = 1.0F;
 	M_ScaleY = 1.0F;
@@ -52,7 +51,7 @@ void C_Player::Draw()
 	//if (playerFlg == 1)
 	{
 		SHADER.m_spriteShader.SetMatrix(M_Mat);
-		SHADER.m_spriteShader.DrawTex(&M_Tex, Math::Rectangle{ 16,0,16,16 }, 1.0f);
+		SHADER.m_spriteShader.DrawTex(M_Tex, Math::Rectangle{ 16,0,16,16 }, 1.0f);
 	}
 
 	// 無敵中は点滅（5フレームごとに描画スキップ）
@@ -70,23 +69,25 @@ void C_Player::Action()
 {
 	if (!M_Alive)return;
 
+	M_Move = { 0,0 };
+
 	//自機の移動処理
-	if ((GetAsyncKeyState('W') & 0x8000)&& GetAsyncKeyState(VK_UP)&0x8000)
+	if ((GetAsyncKeyState('W') & 0x8000)|| (GetAsyncKeyState(VK_UP)&0x8000))
 	{
 		M_Move.y += 6;
 	}
 
-	if (GetAsyncKeyState('A') & 0x8000)
+	if ((GetAsyncKeyState('A') & 0x8000) || (GetAsyncKeyState(VK_LEFT) & 0x8000))
 	{
 		M_Move.x -= 7;
 	}
 
-	if (GetAsyncKeyState('S') & 0x8000)
+	if((GetAsyncKeyState('S') & 0x8000) || (GetAsyncKeyState(VK_DOWN) & 0x8000)) 
 	{
 		M_Move.y -= 6;
 	}
 
-	if (GetAsyncKeyState('D') & 0x8000)
+	if ((GetAsyncKeyState('D') & 0x8000) || (GetAsyncKeyState(VK_RIGHT) & 0x8000))
 	{
 		M_Move.x += 7;
 	}
@@ -129,4 +130,9 @@ void C_Player::TakeDamage(int dmg)
 	// 無敵状態にする
 	M_IsInvincible = true;
 	M_InvincibleTime = 1.0f; // 1秒間無敵
+}
+
+void C_Player::SetStandTex(KdTexture* A_Tex)
+{
+	M_Tex = A_Tex;
 }
