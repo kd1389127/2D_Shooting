@@ -1,20 +1,22 @@
 #include "main.h"
 #include "Scene.h"
+#include "Scene/SceneManager.h"
 
 void Scene::Draw()
 {
-	//îwåi(ÇPñáñ⁄)
-	SHADER.m_spriteShader.SetMatrix(backMat1);
-	SHADER.m_spriteShader.DrawTex(&backTex, Math::Rectangle{ 0,0,1280,720 }, 1.0f);
+	////îwåi(ÇPñáñ⁄)
+	//SHADER.m_spriteShader.SetMatrix(backMat1);
+	//SHADER.m_spriteShader.DrawTex(&backTex, Math::Rectangle{ 0,0,1280,720 }, 1.0f);
 
-	//îwåi(ÇQñáñ⁄)
-	SHADER.m_spriteShader.SetMatrix(backMat2);
-	SHADER.m_spriteShader.DrawTex(&backTex, Math::Rectangle{ 0,0,1280,720 }, 1.0f);
+	////îwåi(ÇQñáñ⁄)
+	//SHADER.m_spriteShader.SetMatrix(backMat2);
+	//SHADER.m_spriteShader.DrawTex(&backTex, Math::Rectangle{ 0,0,1280,720 }, 1.0f);
 
 	if (GAMESTARTFlg == 0)
 	{
-		SHADER.m_spriteShader.SetMatrix(GAMESTARTMat);
-		SHADER.m_spriteShader.DrawTex(&GAMESTARTTex, Math::Rectangle{ 0,0,48,8 }, 1.0f);
+		SceneManager::Instance().Draw();
+		/*SHADER.m_spriteShader.SetMatrix(GAMESTARTMat);
+		SHADER.m_spriteShader.DrawTex(&GAMESTARTTex, Math::Rectangle{ 0,0,48,8 }, 1.0f);*/
 
 		SHADER.m_spriteShader.DrawString(-150, -100, "Enter:ÉXÉ^Å[Ég", Math::Vector4(1, 1, 1, 1));
 		SHADER.m_spriteShader.DrawString(-150, -150, "WASD:à⁄ìÆ", Math::Vector4(1, 1, 1, 1));
@@ -162,16 +164,18 @@ void Scene::Action()
 	}
 }
 
+void Scene::PreUpdate()
+{
+	SceneManager::Instance().PreUpdate();
+}
+
 void Scene::Update()
 {
+	SceneManager::Instance().Update();
 
-	if (GAMESTARTFlg == 0)
+	/*if (GAMESTARTFlg == 0)
 	{
-		Math::Matrix GAMESTRAT_trans = Math::Matrix::CreateTranslation(GAMESTARTX, GAMESTARTY, 0);
-
-		Math::Matrix GAMESTRAT_scale = Math::Matrix::CreateScale(GAMESTARTSize, GAMESTARTSize, 0);
-
-		GAMESTARTMat = GAMESTRAT_scale * GAMESTRAT_trans;
+		
 
 		if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 		{
@@ -179,7 +183,7 @@ void Scene::Update()
 		}
 	}
 
-	if (GAMESTARTFlg == 1)
+	if (GAMESTARTFlg == 1)*/
 	{
 		//ÉXÉeÅ[ÉWÇQÇ…êÿÇËë÷Ç¶
 		if (GetAsyncKeyState('2') & 0x8000)
@@ -970,8 +974,8 @@ void Scene::Update()
 	}
 
 	//îwåi
-	backMat1 = Math::Matrix::CreateTranslation(backX, 0, 0);
-	backMat2 = Math::Matrix::CreateTranslation(backX + 1280, 0, 0);
+	/*backMat1 = Math::Matrix::CreateTranslation(backX, 0, 0);
+	backMat2 = Math::Matrix::CreateTranslation(backX + 1280, 0, 0);*/
 }
 
 void Scene::Init()
@@ -982,7 +986,7 @@ void Scene::Init()
 
 	// âÊëúÇÃì«Ç›çûÇ›èàóù
 	M_PlayerTex.Load("Texture/Mini Pixel Pack 3/Player ship/Player_ship (16 x 16).png");
-	backTex.Load("Texture/Mini Pixel Pack 3/Space_BG (2 frames) (64 x 64).png");
+	//backTex.Load("Texture/Mini Pixel Pack 3/Space_BG (2 frames) (64 x 64).png");
 	enemyTex.Load("Texture/Mini Pixel Pack 3/Enemies/Bon_Bon (16 x 16).png");
 	bulletTex.Load("Texture/Mini Pixel Pack 3/Projectiles/Player_beam (16 x 16).png");
 	expTex.Load("Texture/Mini Pixel Pack 3/Effects/Explosion (16 x 16).png");

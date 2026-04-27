@@ -1,23 +1,15 @@
 #pragma once
-#include "Player.h"
-
-//シーンの種類
-enum SceneType
-{
-	Title,      //0:タイトル
-	Game,       //1:ゲーム
-	Result      //2:リザルト
-};
+#include "Scene/SceneManager.h"
+#include "Player/Player.h"
 
 class Scene
 {
-	C_Player* GetPlayer() { return &M_Player; }				// プレイヤー
-
 private:
 
 	//プレイヤー
 	KdTexture	M_PlayerTex;
 	C_Player	M_Player;
+	C_Player* GetPlayer() { return &M_Player; }				// プレイヤー
 
 	KdTexture backTex;
 	KdTexture enemyTex;
@@ -35,8 +27,6 @@ private:
 	int stage;
 
 	//背景
-	Math::Matrix backMat1;
-	Math::Matrix backMat2;
 	float backX;
 
 	//敵
@@ -186,6 +176,9 @@ public:
 
 	// 解放
 	void Release();
+
+	// 更新処理の前の更新処理
+	void PreUpdate();
 
 	// 更新処理
 	void Update();
