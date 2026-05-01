@@ -69,5 +69,4 @@ public:
 		static SceneManager instance;
 		return instance;
 	}
-
 };

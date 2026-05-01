@@ -1,20 +1,13 @@
 #include "main.h"
 #include "Scene.h"
-#include "Scene/SceneManager.h"
+//#include "Scene/SceneManager.h"
 
 void Scene::Draw()
 {
-	////îwåi(ÇPñáñ⁄)
-	//SHADER.m_spriteShader.SetMatrix(backMat1);
-	//SHADER.m_spriteShader.DrawTex(&backTex, Math::Rectangle{ 0,0,1280,720 }, 1.0f);
-
-	////îwåi(ÇQñáñ⁄)
-	//SHADER.m_spriteShader.SetMatrix(backMat2);
-	//SHADER.m_spriteShader.DrawTex(&backTex, Math::Rectangle{ 0,0,1280,720 }, 1.0f);
 
 	if (GAMESTARTFlg == 0)
 	{
-		SceneManager::Instance().Draw();
+		//SceneManager::Instance().Draw();
 		/*SHADER.m_spriteShader.SetMatrix(GAMESTARTMat);
 		SHADER.m_spriteShader.DrawTex(&GAMESTARTTex, Math::Rectangle{ 0,0,48,8 }, 1.0f);*/
 
@@ -166,12 +159,12 @@ void Scene::Action()
 
 void Scene::PreUpdate()
 {
-	SceneManager::Instance().PreUpdate();
+	//SceneManager::Instance().PreUpdate();
 }
 
 void Scene::Update()
 {
-	SceneManager::Instance().Update();
+	//SceneManager::Instance().Update();
 
 	/*if (GAMESTARTFlg == 0)
 	{
@@ -965,17 +958,9 @@ void Scene::Update()
 			Life1Mat = Life1_scale * Life1_trans;
 		}*/
 
-	//îwåiÉXÉNÉçÅ[Éã
-	backX -= 4;
+	
 
-	if (backX < -1280)
-	{
-		backX = 0;
-	}
-
-	//îwåi
-	/*backMat1 = Math::Matrix::CreateTranslation(backX, 0, 0);
-	backMat2 = Math::Matrix::CreateTranslation(backX + 1280, 0, 0);*/
+	
 }
 
 void Scene::Init()

@@ -1,6 +1,7 @@
 #include "main.h"
 
 #include "Scene.h"
+#include "Scene/SceneManager.h"
 
 //===================================================================
 // メイン
@@ -146,7 +147,7 @@ void Application::Execute()
 	//===================================================================
 
 	// ゲームインスタンス
-	SCENE.Init();
+	//SCENE.Init();
 
 	// 時間
 	DWORD baseTime = timeGetTime();
@@ -199,11 +200,14 @@ void Application::Execute()
 		D3D.GetDevContext()->ClearDepthStencilView(D3D.GetZBuffer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1, 0);
 
 		// ゲーム更新処理
-		SCENE.Update();
+		SceneManager::Instance().PreUpdate();
+		SceneManager::Instance().Update();
+		//SCENE.Update();
 
 		// ゲーム描画処理
 		SHADER.m_spriteShader.Begin();
-		SCENE.Draw();
+		//SCENE.Draw();
+		SceneManager::Instance().Draw();
 		SHADER.m_spriteShader.End();
 
 

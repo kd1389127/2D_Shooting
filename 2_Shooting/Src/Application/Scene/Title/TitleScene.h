@@ -23,4 +23,6 @@ private:
 	float m_alpha = 1.0f;
 	float m_addAlpha = 0.01f;
 
+	int GAMESTARTFlg;
+	bool keyFlg;
 };

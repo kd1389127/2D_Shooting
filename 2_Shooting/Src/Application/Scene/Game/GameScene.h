@@ -16,6 +16,11 @@ public:
 	void Release()		override;
 
 private:
-	KdTexture M_Tex;
+	KdTexture M_BackGroundTex;
+	//KdTexture M_BackGround2Tex;
 
+	//背景
+	long backX;
+
+	bool keyFlg;
 };

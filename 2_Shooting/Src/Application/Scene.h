@@ -1,5 +1,4 @@
 #pragma once
-#include "Scene/SceneManager.h"
 #include "Player/Player.h"
 
 class Scene
@@ -26,8 +25,7 @@ private:
 	
 	int stage;
 
-	//”wŒi
-	float backX;
+	
 
 	//“G
 	static const int enemyNum = 30;	//“G‚Ì”(‘‚«Š·‚¦•s‰Â”\)
