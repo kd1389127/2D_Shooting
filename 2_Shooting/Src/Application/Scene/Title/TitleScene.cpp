@@ -4,7 +4,6 @@
 
 void TitleScene::Init()
 {
-	keyFlg = false;
 	M_Tex.Load("Texture/BackGround/Title/neko.png");
 	//m_starttex.Load("Asset/Textures/start.png");
 }

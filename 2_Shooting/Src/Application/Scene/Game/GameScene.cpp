@@ -1,10 +1,8 @@
 #include "GameScene.h"
 #include "../SceneManager.h"
 
-
 void GameScene::Init()
 {
-	keyFlg = false;
 	M_BackGroundTex.Load("Texture/BackGround/Game/Space_BG (2 frames) (64 x 64).png");
 	//M_BackGround2Tex.Load("Texture/BackGround/Game/Space_BG (2 frames) (64 x 64).png");
 }
