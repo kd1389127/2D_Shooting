@@ -96,18 +96,22 @@ void C_Player::Action()
 	}
 
 	//両端の判定
-	if (M_Move.x > 640 - 24)
+	if (M_Pos.x > 640 - 32)
 	{
-		M_Move.x = 640 - 24;
+		M_Pos.x = 640 - 32;
 	}
-	if (M_Move.x < -640 + 24)
+	if (M_Pos.x < -640 + 32)
 	{
-		M_Move.x = -640 + 24;
+		M_Pos.x = -640 + 32;
 	}
 	//下端判定
-	if (M_Pos.y < -360)
+	if (M_Pos.y < -360 + 32)
 	{
-		M_Pos.y = -360 -;
+		M_Pos.y = -360 + 32;
+	}
+	if (M_Pos.y > 360 - 32)
+	{
+		M_Pos.y = 360 - 32;
 	}
 
 }
