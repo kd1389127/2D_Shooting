@@ -1,7 +1,9 @@
 #pragma once
 
 #include "../Base/BaseScene.h"
-//#include "Player/Player.h"
+
+//前方宣言
+class C_Player;
 
 class GameScene : public BaseScene
 {
@@ -17,16 +19,15 @@ public:
 	void Release()		override;
 
 private:
+	Math::Matrix	M_BackGroundMat1;
+	Math::Matrix	M_BackGroundMat2;
 	KdTexture M_BackGroundTex;
-	//KdTexture M_BackGround2Tex;
 
 	//プレイヤー
-	KdTexture	M_PlayerTex;
-	//C_Player	M_Player;
-	//C_Player* GetPlayer() { return &M_Player; }				// プレイヤー
+	std::shared_ptr<C_Player> M_Player = nullptr;
 
 	//背景
-	long backX;
+	float backX = 0;
 
 	bool keyFlg;
 };

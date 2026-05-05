@@ -17,8 +17,8 @@ public:
 
 private:
 
-	KdTexture M_Tex;
-	KdTexture M_StartTex;
+	KdTexture M_BackGroundTex;
+	Math::Matrix	M_BackGroundMat;
 
 	float m_alpha = 1.0f;
 	float m_addAlpha = 0.01f;

@@ -4,8 +4,7 @@
 
 void TitleScene::Init()
 {
-	M_Tex.Load("Texture/BackGround/Title/neko.png");
-	//m_starttex.Load("Asset/Textures/start.png");
+	M_BackGroundTex.Load("Texture/BackGround/Title/neko.png");
 }
 
 void TitleScene::Update()
@@ -35,26 +34,13 @@ void TitleScene::Update()
 	{
 		keyFlg = false;
 	}
+	M_BackGroundMat = Math::Matrix::CreateTranslation(0, 0, 0);
 }
 
 void TitleScene::Draw()
 {
-	KdShaderManager::GetInstance().m_spriteShader.DrawTex(&M_Tex, Math::Rectangle{ 0,0,1280,720 }, 1.0f);
-	/*Math::Color color = { 1.0f,1.0f,1.0f,m_alpha };
-	KdShaderManager::GetInstance().m_spriteShader.DrawTex(&M_StartTex, 0, -200, nullptr, &color);*/
-
-	if (GAMESTARTFlg == 0)
-	{
-		//SceneManager::Instance().Draw();
-		/*SHADER.m_spriteShader.SetMatrix(GAMESTARTMat);
-		SHADER.m_spriteShader.DrawTex(&GAMESTARTTex, Math::Rectangle{ 0,0,48,8 }, 1.0f);*/
-
-		/*SHADER.m_spriteShader.DrawString(-150, -100, "Enter:スタート", Math::Vector4(1, 1, 1, 1));
-		SHADER.m_spriteShader.DrawString(-150, -150, "WASD:移動", Math::Vector4(1, 1, 1, 1));
-		SHADER.m_spriteShader.DrawString(-150, -200, "SPACE:弾を発射", Math::Vector4(1, 1, 1, 1));
-		SHADER.m_spriteShader.DrawString(-150, -250, "R:コンテニュー", Math::Vector4(1, 1, 1, 1));*/
-
-	}
+	SHADER.m_spriteShader.SetMatrix(M_BackGroundMat);
+	SHADER.m_spriteShader.DrawTex(&M_BackGroundTex, Math::Rectangle(0, 0, 1280, 720), 1.0F);
 }
 
 void TitleScene::Release()

@@ -43,9 +43,6 @@
     <Filter Include="Src\System\Audio">
       <UniqueIdentifier>{667d1cb1-5ae5-476f-acd5-14b7d294a95a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\Player">
-      <UniqueIdentifier>{98d00e0e-c311-495d-9da4-b6c563bb7e34}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Src\Application\Scene">
       <UniqueIdentifier>{58a41c90-0886-48a5-9da7-ec12075155a2}</UniqueIdentifier>
     </Filter>
@@ -61,8 +58,11 @@
     <Filter Include="Src\Application\Scene\Base">
       <UniqueIdentifier>{6b3637c6-d5e2-409a-9571-aee069484a17}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src\Application\Enemy">
+    <Filter Include="Src\Application\Scene\Game\Enemy">
       <UniqueIdentifier>{09f828d4-30bd-414f-a7a7-540218a08409}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Scene\Game\Player">
+      <UniqueIdentifier>{98d00e0e-c311-495d-9da4-b6c563bb7e34}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -156,9 +156,6 @@
     <ClInclude Include="..\Library\strconv.h">
       <Filter>Library</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\Player\Player.h">
-      <Filter>Src\Application\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Application\Scene\Base\BaseScene.h">
       <Filter>Src\Application\Scene\Base</Filter>
     </ClInclude>
@@ -177,8 +174,11 @@
     <ClInclude Include="Src\Application\Scene\SceneManager.h">
       <Filter>Src\Application\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\Enemy\Enemy.h">
-      <Filter>Src\Application\Enemy</Filter>
+    <ClInclude Include="Src\Application\Scene\Game\Enemy\Enemy.h">
+      <Filter>Src\Application\Scene\Game\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Scene\Game\Player\Player.h">
+      <Filter>Src\Application\Scene\Game\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -242,9 +242,6 @@
     <ClCompile Include="src\System\Window\KdGameWindow.cpp">
       <Filter>Src\System\Window</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\Player\Player.cpp">
-      <Filter>Src\Application\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Application\Scene\Base\BaseScene.cpp">
       <Filter>Src\Application\Scene\Base</Filter>
     </ClCompile>
@@ -263,8 +260,11 @@
     <ClCompile Include="Src\Application\Scene\SceneManager.cpp">
       <Filter>Src\Application\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\Enemy\Enemy.cpp">
-      <Filter>Src\Application\Enemy</Filter>
+    <ClCompile Include="Src\Application\Scene\Game\Enemy\Enemy.cpp">
+      <Filter>Src\Application\Scene\Game\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Scene\Game\Player\Player.cpp">
+      <Filter>Src\Application\Scene\Game\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

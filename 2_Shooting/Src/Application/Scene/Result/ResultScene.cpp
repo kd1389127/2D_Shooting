@@ -4,7 +4,7 @@
 
 void ResultScene::Init()
 {
-	M_Tex.Load("Texture/BackGround/Result/Result.png");
+	M_BackGroundTex.Load("Texture/BackGround/Result/Result.png");
 }
 
 void ResultScene::Update()
@@ -21,11 +21,13 @@ void ResultScene::Update()
 	{
 		keyFlg = false;
 	}
+	M_BackGroundMat = Math::Matrix::CreateTranslation(0, 0, 0);
 }
 
 void ResultScene::Draw()
 {
-	KdShaderManager::GetInstance().m_spriteShader.DrawTex(&M_Tex, Math::Rectangle{ 0,0,1280,720 }, 1.0f);
+	SHADER.m_spriteShader.SetMatrix(M_BackGroundMat);
+	SHADER.m_spriteShader.DrawTex(&M_BackGroundTex, Math::Rectangle(0, 0, 1280, 720), 1.0F);
 }
 
 void ResultScene::Release()

@@ -217,7 +217,7 @@ void Application::Execute()
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
 		// ImGuiˆ—
-		SCENE.ImGuiUpdate();
+		//SCENE.ImGuiUpdate();
 		// GUI•`‰æÀs
 		ImGui::Render();
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
@@ -254,7 +254,7 @@ void Application::Execute()
 	}
 
 	// ƒQ[ƒ€‰ğ•ú
-	SCENE.Release();
+	//SCENE.Release();
 
 
 	//===================================================================

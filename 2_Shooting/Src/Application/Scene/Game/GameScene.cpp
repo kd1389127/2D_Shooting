@@ -1,14 +1,17 @@
 #include "GameScene.h"
 #include "../SceneManager.h"
+#include "Player/Player.h"
 
 void GameScene::Init()
 {
+	M_Player = std::make_shared<C_Player>();
 	M_BackGroundTex.Load("Texture/BackGround/Game/Space_BG (2 frames) (64 x 64).png");
-	//M_BackGround2Tex.Load("Texture/BackGround/Game/Space_BG (2 frames) (64 x 64).png");
+	M_Player->Init();
 }
 
 void GameScene::Update()
 {
+	M_Player->Update();
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
 		if (keyFlg == false)
@@ -24,16 +27,28 @@ void GameScene::Update()
 
 	//背景スクロール
 	backX += 4;
-	if (backX < -1280)
+	if (backX > 1280)
 	{
 		backX = 0;
 	}
+
+	M_BackGroundMat1 = Math::Matrix::CreateTranslation(backX, 0, 0);
+	M_BackGroundMat2 = Math::Matrix::CreateTranslation(backX - 1280,0, 0);
 }
 
 void GameScene::Draw()
 {
-	KdShaderManager::GetInstance().m_spriteShader.DrawTex(&M_BackGroundTex, Math::Rectangle{ backX,0,1280,720 }, 1.0f);
-	KdShaderManager::GetInstance().m_spriteShader.DrawTex(&M_BackGroundTex, Math::Rectangle{ backX + 1280,0,1280,720 }, 1.0f);
+	//背景
+	SHADER.m_spriteShader.SetMatrix(M_BackGroundMat1);
+	SHADER.m_spriteShader.DrawTex(&M_BackGroundTex, Math::Rectangle(0, 0, 1280, 720), 1.0F);
+	SHADER.m_spriteShader.SetMatrix(M_BackGroundMat2);
+	SHADER.m_spriteShader.DrawTex(&M_BackGroundTex, Math::Rectangle{ 0,0,1280,720 }, 1.0F);
+	
+	//プレイヤー
+	M_Player->Draw();
+
+	//エネミー
+
 }
 
 void GameScene::Release()
