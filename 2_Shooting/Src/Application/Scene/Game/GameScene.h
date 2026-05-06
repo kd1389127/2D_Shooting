@@ -5,6 +5,7 @@
 //前方宣言
 class C_Player;
 class C_Enemy;
+class C_PlayerBullet;
 
 class GameScene : public BaseScene
 {
@@ -26,7 +27,10 @@ private:
 
 	//プレイヤー
 	std::shared_ptr<C_Player> M_Player = nullptr;
+	//エネミー
 	std::shared_ptr<C_Enemy> M_Enemy = nullptr;
+	//弾
+	std::shared_ptr<C_PlayerBullet> M_PlayerBullet = nullptr;
 
 	//背景
 	float backX = 0;

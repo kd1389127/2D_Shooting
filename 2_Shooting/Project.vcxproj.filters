@@ -64,6 +64,12 @@
     <Filter Include="Src\Application\Scene\Game\Player">
       <UniqueIdentifier>{98d00e0e-c311-495d-9da4-b6c563bb7e34}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Scene\Game\Player\PlayerBullet">
+      <UniqueIdentifier>{532ff216-3514-4192-bf7e-36c5a3fe513d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Scene\Game\Enemy\BossBullet">
+      <UniqueIdentifier>{6bb6988b-9dea-41a4-9752-d2091b5ee8c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -180,6 +186,15 @@
     <ClInclude Include="Src\Application\Scene\Game\Player\Player.h">
       <Filter>Src\Application\Scene\Game\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Scene\Game\Enemy\BossBullet\BossBullet.h">
+      <Filter>Src\Application\Scene\Game\Enemy\BossBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Scene\Game\BaseBullet.h">
+      <Filter>Src\Application\Scene\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Scene\Game\Player\PlayerBullet\PlayerBullet.h">
+      <Filter>Src\Application\Scene\Game\Player\PlayerBullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -265,6 +280,15 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Scene\Game\Player\Player.cpp">
       <Filter>Src\Application\Scene\Game\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Scene\Game\Enemy\BossBullet\BossBullet.cpp">
+      <Filter>Src\Application\Scene\Game\Enemy\BossBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Scene\Game\BaseBullet.cpp">
+      <Filter>Src\Application\Scene\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Scene\Game\Player\PlayerBullet\PlayerBullet.cpp">
+      <Filter>Src\Application\Scene\Game\Player\PlayerBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

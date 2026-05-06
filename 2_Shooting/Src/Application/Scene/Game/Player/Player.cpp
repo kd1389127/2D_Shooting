@@ -95,6 +95,16 @@ void C_Player::Action()
 		M_Move.x += 7;
 	}
 
+	//スペースキーで弾発射
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+	{
+		//待機時間が0の場合
+		if (shotWait == 0)
+		{
+			shotFlg = true;
+		}
+	}
+
 	//両端の判定
 	if (M_Pos.x > 640 - 32)
 	{

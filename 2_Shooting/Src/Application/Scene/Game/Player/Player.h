@@ -27,6 +27,7 @@ public:
 	bool GetDamageFlg() { return M_DamageFlg; }
 
 private:
+
 	KdTexture		M_Tex;
 
 	Math::Matrix	M_ScaleMat;		// 拡大行列
@@ -50,5 +51,7 @@ private:
 	// スクロール
 	float	M_ScrollX;
 
-	
+	int shotWait;		//発射待機時間
+
+	bool shotFlg;
 };

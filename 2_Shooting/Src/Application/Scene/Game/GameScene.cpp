@@ -2,11 +2,13 @@
 #include "../SceneManager.h"
 #include "Player/Player.h"
 #include "Enemy/Enemy.h"
+#include "Player/PlayerBullet/PlayerBullet.h"
 
 void GameScene::Init()
 {
 	M_Player = std::make_shared<C_Player>();
 	M_Enemy = std::make_shared<C_Enemy>();
+	M_PlayerBullet = std::make_shared<C_PlayerBullet>();
 	M_BackGroundTex.Load("Texture/BackGround/Game/Space_BG (2 frames) (64 x 64).png");
 	M_Player->Init();
 	M_Enemy->Init();
@@ -15,7 +17,11 @@ void GameScene::Init()
 void GameScene::Update()
 {
 	M_Player->Update();
+
 	M_Enemy->Update();
+	
+	M_PlayerBullet->Update();
+	
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
 		if (keyFlg == false)
