@@ -16,8 +16,8 @@ public:
 
 	Math::Vector2 GetPos() { return M_Pos; }
 	Math::Vector2 GetFuturePos() { return M_Pos + M_Move; }
-	float GetRadiusX() { return 32.0F; }
-	float GetRadiusY() { return 64.0F; }
+	float GetRadiusX() { return M_Radius.x * fabs(M_ScaleX); }
+	float GetRadiusY() { return M_Radius.y * M_ScaleY; }
 	int GetHP() const { return M_Hp; }
 	void TakeDamage(int dmg);
 	bool IsDead() const { return M_Hp <= 0; }
@@ -33,6 +33,7 @@ private:
 
 	Math::Vector2	M_Pos;			// 座標
 	Math::Vector2	M_Move;			// 移動量
+	Math::Vector2	M_Radius;		// 半径
 	float			M_ScaleX;		// 横拡大率
 	float			M_ScaleY;		// 縦拡大率
 	int				M_Hp;			// HP

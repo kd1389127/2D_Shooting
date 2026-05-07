@@ -6,6 +6,7 @@ void C_Enemy::Init()
 	M_Alive = true;
 	M_ScaleX = 4.5F;
 	M_ScaleY = 4.5F;
+	M_Radius = { 64.0f,64.0f };
 	M_Tex.Load("Texture/Boss/FlameDemon Evolved.png");
 }
 

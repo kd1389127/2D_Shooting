@@ -166,6 +166,7 @@
     <ClInclude Include="Src\Application\Scene\Game\Enemy\BossBullet\BossBullet.h" />
     <ClInclude Include="Src\Application\Scene\Game\Enemy\Enemy.h" />
     <ClInclude Include="Src\Application\Scene\Game\GameScene.h" />
+    <ClInclude Include="Src\Application\Scene\Game\Hit\Hit.h" />
     <ClInclude Include="Src\Application\Scene\Game\Player\Player.h" />
     <ClInclude Include="Src\Application\Scene\Game\Player\PlayerBullet\PlayerBullet.h" />
     <ClInclude Include="Src\Application\Scene\Result\ResultScene.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="Src\Application\Scene\Game\Enemy\BossBullet\BossBullet.cpp" />
     <ClCompile Include="Src\Application\Scene\Game\Enemy\Enemy.cpp" />
     <ClCompile Include="Src\Application\Scene\Game\GameScene.cpp" />
+    <ClCompile Include="Src\Application\Scene\Game\Hit\Hit.cpp" />
     <ClCompile Include="Src\Application\Scene\Game\Player\Player.cpp" />
     <ClCompile Include="Src\Application\Scene\Game\Player\PlayerBullet\PlayerBullet.cpp" />
     <ClCompile Include="Src\Application\Scene\Result\ResultScene.cpp" />

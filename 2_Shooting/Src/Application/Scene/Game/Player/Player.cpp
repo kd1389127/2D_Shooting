@@ -1,4 +1,5 @@
 #include "Player.h"
+#include"PlayerBullet/PlayerBullet.h"
 
 C_Player::C_Player()
 {
@@ -12,13 +13,19 @@ C_Player::~C_Player()
 
 void C_Player::Init()
 {
+	M_PlayerBullet = std::make_shared<C_PlayerBullet>();
+
 	M_Hp = 6;
 	M_MaxHp = 6;
 	M_Pos = { -450,0 };
+	M_Radius = { 16.0f,16.0f };
 	M_Alive = true;
 	M_ScaleX = 2.5F;
 	M_ScaleY = 2.5F;
 	M_Tex.Load("Texture/Player/Playership/Player_ship.png");
+
+	M_PlayerBullet->Init();
+	M_PlayerBullet->SetOwner(this);
 }
 
 void C_Player::Update()
@@ -29,6 +36,8 @@ void C_Player::Update()
 
 	// 座標確定処理
 	M_Pos += M_Move;
+
+	M_PlayerBullet->Update();
 
 	//M_ScrollX = M_Pos.x;
 
@@ -66,6 +75,8 @@ void C_Player::Draw()
 	SHADER.m_spriteShader.SetMatrix(M_Mat);
 	SHADER.m_spriteShader.DrawTex(&M_Tex, Math::Rectangle{ 16,0,16,16 }, 1.0f);
 
+	M_PlayerBullet->Draw();
+
 }
 
 void C_Player::Action()
@@ -74,8 +85,10 @@ void C_Player::Action()
 
 	M_Move = { 0,0 };
 
+
+
 	//自機の移動処理
-	if (GetAsyncKeyState(VK_UP)&0x8000)
+	if (GetAsyncKeyState(VK_UP) & 0x8000)
 	{
 		M_Move.y += 6;
 	}
@@ -85,12 +98,12 @@ void C_Player::Action()
 		M_Move.x -= 7;
 	}
 
-	if(GetAsyncKeyState(VK_DOWN) & 0x8000)
+	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 	{
 		M_Move.y -= 6;
 	}
 
-	if(GetAsyncKeyState(VK_RIGHT) & 0x8000)
+	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 	{
 		M_Move.x += 7;
 	}
@@ -98,30 +111,36 @@ void C_Player::Action()
 	//スペースキーで弾発射
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
-		//待機時間が0の場合
-		if (shotWait == 0)
+		if(keyFlg == false)
 		{
-			shotFlg = true;
+			M_PlayerBullet->Shot();
 		}
+		keyFlg = true;
+	}
+	else
+	{
+		keyFlg = false;
 	}
 
+	
+
 	//両端の判定
-	if (M_Pos.x > 640 - 32)
+	if (M_Pos.x > 640 - M_Radius.x)
 	{
-		M_Pos.x = 640 - 32;
+		M_Pos.x = 640 - M_Radius.x;
 	}
-	if (M_Pos.x < -640 + 32)
+	if (M_Pos.x < -640 + M_Radius.x)
 	{
-		M_Pos.x = -640 + 32;
+		M_Pos.x = -640 + M_Radius.x;
 	}
 	//下端判定
-	if (M_Pos.y < -360 + 32)
+	if (M_Pos.y < -360 + M_Radius.y)
 	{
-		M_Pos.y = -360 + 32;
+		M_Pos.y = -360 + M_Radius.y;
 	}
-	if (M_Pos.y > 360 - 32)
+	if (M_Pos.y > 360 - M_Radius.y)
 	{
-		M_Pos.y = 360 - 32;
+		M_Pos.y = 360 - M_Radius.y;
 	}
 
 }

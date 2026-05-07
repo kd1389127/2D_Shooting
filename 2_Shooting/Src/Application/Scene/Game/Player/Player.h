@@ -1,5 +1,8 @@
 #pragma once
 
+//‘O•ûéŒ¾
+class C_PlayerBullet;
+
 class C_Player
 {
 public:
@@ -17,9 +20,8 @@ public:
 	void SetAlive(bool A_Alive) { M_Alive = A_Alive; }
 
 	Math::Vector2 GetPos() { return M_Pos; }
-	Math::Vector2 GetFuturePos() { return M_Pos + M_Move; }
-	float GetRadiusX() { return 32.0F; }
-	float GetRadiusY() { return 64.0F; }
+	float GetRadiusX() { return M_Radius.x * fabs(M_ScaleX); }
+	float GetRadiusY() { return M_Radius.y * M_ScaleY; }
 	int GetHP() const { return M_Hp; }
 	void TakeDamage(int dmg);
 	bool IsDead() const { return M_Hp <= 0; }
@@ -27,6 +29,8 @@ public:
 	bool GetDamageFlg() { return M_DamageFlg; }
 
 private:
+	//’e
+	std::shared_ptr<C_PlayerBullet> M_PlayerBullet = nullptr;
 
 	KdTexture		M_Tex;
 
@@ -37,6 +41,7 @@ private:
 	
 	Math::Vector2	M_Pos;			// À•W
 	Math::Vector2	M_Move;			// ˆÚ“®—Ê
+	Math::Vector2	M_Radius;		// ”¼Œa
 	float			M_ScaleX;		// ‰¡Šg‘å—¦
 	float			M_ScaleY;		// cŠg‘å—¦
 	int				M_Hp;			// HP
@@ -54,4 +59,5 @@ private:
 	int shotWait;		//”­Ë‘Ò‹@ŠÔ
 
 	bool shotFlg;
+	bool keyFlg;
 };
