@@ -3,12 +3,13 @@
 
 void C_PlayerBullet::Init()
 {
-	M_BulletTex.Load("Texture/Bullet/Player_beam (16 x 16).png");
+	M_Tex.Load("Texture/Bullet/Player_beam (16 x 16).png");
 	for (int i = 0; i < BulletNum; ++i)
 	{
 		M_BulletPos[i] = { 0,0 };
 		M_BulletFlg[i] = false;
 	}
+	M_Radius = { 8.0f,8.0f };
 	M_ScaleX = 1.5F;
 	M_ScaleY = 1.5F;
 	//自機の弾の発射待機時間
@@ -19,20 +20,24 @@ void C_PlayerBullet::Update()
 {
 	for (int i = 0; i < BulletNum; ++i)
 	{
-		M_BulletPos[i].x += 10;
+		M_BulletPos[i].x += 20;
 
 		if (M_BulletPos[i].x > 640)
 		{
 			M_BulletFlg[i] = false;
 		}
 
-		//弾の発射待機時間
-		shotWait--;
-		if (shotWait <= 0)
-		{
-			shotWait = 0;
-		}
+	}
+	
+	//弾の発射待機時間(これはfor文に入れない)
+	shotWait--;
+	if (shotWait <= 0)
+	{
+		shotWait = 0;
+	}
 
+	for (int i = 0; i < BulletNum; ++i)
+	{
 		M_ScaleMat = Math::Matrix::CreateScale(M_ScaleX, M_ScaleY, 1.0F);
 		M_TransMat = Math::Matrix::CreateTranslation(M_BulletPos[i].x, M_BulletPos[i].y, 0);
 		M_RotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(270)); //回転行列
@@ -48,7 +53,7 @@ void C_PlayerBullet::Draw()
 		if (M_BulletFlg[i] == true)
 		{
 			SHADER.m_spriteShader.SetMatrix(M_BulletMat[i]);
-			SHADER.m_spriteShader.DrawTex(&M_BulletTex, Math::Rectangle{ 0,0,16,16 }, 1.0f);
+			SHADER.m_spriteShader.DrawTex(&M_Tex, Math::Rectangle{ 0,0,16,16 }, 1.0f);
 		}
 	}
 }
@@ -65,7 +70,7 @@ void C_PlayerBullet::Shot()
 				M_BulletFlg[i] = true;	//発射状態に
 
 				//弾の座標を自機の座標にセット
-				M_BulletPos[i] = M_Owner->GetPos();
+				M_BulletPos[i] = P_M_Owner->GetPos();
 
 				shotWait = 10;		//待機時間10フレーム
 
@@ -79,5 +84,10 @@ void C_PlayerBullet::Shot()
 
 void C_PlayerBullet::Release()
 {
-	M_BulletTex.Release();
+	M_Tex.Release();
+}
+
+void C_PlayerBullet::PlayerBulletHit()
+{
+	
 }

@@ -1,5 +1,8 @@
 #pragma once
 
+//前方宣言
+class C_BossBullet;
+
 class C_Enemy
 {
 public:
@@ -25,7 +28,10 @@ public:
 	bool GetDamageFlg() { return M_DamageFlg; }
 
 private:
-	KdTexture		 M_Tex;		
+	//弾
+	std::shared_ptr<C_BossBullet> M_BossBullet = nullptr;
+
+	KdTexture		M_Tex;		
 	Math::Matrix	M_ScaleMat;		// 拡大行列
 	Math::Matrix	M_TransMat;		// 移動行列
 	Math::Matrix	M_RotationMat;	// 回転行列
@@ -39,9 +45,6 @@ private:
 	int				M_Hp;			// HP
 	int				M_MaxHp;		// MaxHp
 	bool			M_Alive;		// 生存フラグ
-
-	bool  M_IsInvincible;			//一定期間の無敵フラグ
-	float M_InvincibleTime;			//無敵の時間
 
 	bool M_DamageFlg = false;		//ダメージフラグ
 

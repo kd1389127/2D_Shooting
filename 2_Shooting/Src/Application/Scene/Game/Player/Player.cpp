@@ -85,8 +85,6 @@ void C_Player::Action()
 
 	M_Move = { 0,0 };
 
-
-
 	//自機の移動処理
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
 	{
@@ -111,18 +109,8 @@ void C_Player::Action()
 	//スペースキーで弾発射
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
-		if(keyFlg == false)
-		{
-			M_PlayerBullet->Shot();
-		}
-		keyFlg = true;
+		M_PlayerBullet->Shot();
 	}
-	else
-	{
-		keyFlg = false;
-	}
-
-	
 
 	//両端の判定
 	if (M_Pos.x > 640 - M_Radius.x)
