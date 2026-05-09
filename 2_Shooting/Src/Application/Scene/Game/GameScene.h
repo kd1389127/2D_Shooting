@@ -5,8 +5,6 @@
 //前方宣言
 class C_Player;
 class C_Enemy;
-class C_PlayerBullet;
-class C_BossBullet;
 class C_Hit;
 
 class GameScene : public BaseScene
@@ -24,13 +22,8 @@ public:
 
 	void Hit();
 
-	
-
-	C_Player& GetPlayer() {	return *M_Player;}
-	C_Enemy& GetEnemy() { return *M_Enemy; }
-	C_PlayerBullet& GetPlayerBullet() { return *M_PlayerBullet; }
-	C_BossBullet& GetBossBullet() { return *M_BossBullet; }
-
+	std::shared_ptr<C_Player> GetPlayer() {	return M_Player;}
+	std::shared_ptr<C_Enemy> GetEnemy() { return M_Enemy; }
 
 private:
 	Math::Matrix	M_BackGroundMat1;
@@ -39,10 +32,8 @@ private:
 
 	//プレイヤー
 	std::shared_ptr<C_Player> M_Player = nullptr;
-	std::shared_ptr<C_PlayerBullet> M_PlayerBullet = nullptr;
 	//エネミー
 	std::shared_ptr<C_Enemy> M_Enemy = nullptr;
-	std::shared_ptr<C_BossBullet> M_BossBullet = nullptr;
 	//当たり判定
 	std::shared_ptr<C_Hit> M_Hit = nullptr;
 

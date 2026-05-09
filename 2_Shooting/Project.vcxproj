@@ -162,6 +162,7 @@
     <ClInclude Include="Src\Application\main.h" />
     <ClInclude Include="Src\Application\Scene.h" />
     <ClInclude Include="Src\Application\Scene\Base\BaseScene.h" />
+    <ClInclude Include="Src\Application\Scene\GameOver\GameOverScene.h" />
     <ClInclude Include="Src\Application\Scene\Game\BaseBullet.h" />
     <ClInclude Include="Src\Application\Scene\Game\Enemy\BossBullet\BossBullet.h" />
     <ClInclude Include="Src\Application\Scene\Game\Enemy\Enemy.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="Src\Application\main.cpp" />
     <ClCompile Include="Src\Application\Scene.cpp" />
     <ClCompile Include="Src\Application\Scene\Base\BaseScene.cpp" />
+    <ClCompile Include="Src\Application\Scene\GameOver\GameOverScene.cpp" />
     <ClCompile Include="Src\Application\Scene\Game\BaseBullet.cpp" />
     <ClCompile Include="Src\Application\Scene\Game\Enemy\BossBullet\BossBullet.cpp" />
     <ClCompile Include="Src\Application\Scene\Game\Enemy\Enemy.cpp" />

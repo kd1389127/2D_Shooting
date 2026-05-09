@@ -1,14 +1,14 @@
-#include "TitleScene.h"
-
+#include "GameOverScene.h"
 #include "../SceneManager.h"
 
-void TitleScene::Init()
+
+void GameOverScene::Init()
 {
-	M_BackGroundTex.Load("Texture/BackGround/Title/Title.png");
-	M_StartTex.Load("Texture/BackGround/Title/TapToEneter.png");
+	M_BackGroundTex.Load("Texture/BackGround/GameOver/GameOver.png");
+	M_EnterTex.Load("Texture/BackGround/GameOver/Enter.png");
 }
 
-void TitleScene::Update()
+void GameOverScene::Update()
 {
 	m_alpha += m_addAlpha;
 
@@ -28,27 +28,27 @@ void TitleScene::Update()
 		if (keyFlg == false)
 		{
 			SceneManager::Instance().SetNextScene(SceneManager::SceneType::Game);
-			keyFlg = true;
 		}
+		keyFlg = true;
 	}
 	else
 	{
 		keyFlg = false;
 	}
 	M_BackGroundMat = Math::Matrix::CreateTranslation(0, 0, 0);
-	M_StartMat = Math::Matrix::CreateTranslation(0, -150, 0);
+	M_EnterMat = Math::Matrix::CreateTranslation(15, -200, 0);
 }
 
-void TitleScene::Draw()
+void GameOverScene::Draw()
 {
 	SHADER.m_spriteShader.SetMatrix(M_BackGroundMat);
 	SHADER.m_spriteShader.DrawTex(&M_BackGroundTex, Math::Rectangle(0, 0, 1280, 720), 1.0F);
 
-	SHADER.m_spriteShader.SetMatrix(M_StartMat);
-	SHADER.m_spriteShader.DrawTex(&M_StartTex, Math::Rectangle(0, 0, 754, 64), m_alpha);
+	SHADER.m_spriteShader.SetMatrix(M_EnterMat);
+	SHADER.m_spriteShader.DrawTex(&M_EnterTex, Math::Rectangle(0, 0, 966, 78), m_alpha);
 }
 
-void TitleScene::Release()
+void GameOverScene::Release()
 {
 
 }

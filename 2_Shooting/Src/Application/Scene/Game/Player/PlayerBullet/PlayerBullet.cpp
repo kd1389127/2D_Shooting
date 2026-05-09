@@ -70,7 +70,7 @@ void C_PlayerBullet::Shot()
 				M_BulletFlg[i] = true;	//発射状態に
 
 				//弾の座標を自機の座標にセット
-				M_BulletPos[i] = P_M_Owner->GetPos();
+				M_BulletPos[i] = M_Owner->GetPos();
 
 				shotWait = 10;		//待機時間10フレーム
 
@@ -85,9 +85,4 @@ void C_PlayerBullet::Shot()
 void C_PlayerBullet::Release()
 {
 	M_Tex.Release();
-}
-
-void C_PlayerBullet::PlayerBulletHit()
-{
-	
 }

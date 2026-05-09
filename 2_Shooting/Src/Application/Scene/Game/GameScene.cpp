@@ -1,20 +1,16 @@
 #include "GameScene.h"
 #include "../SceneManager.h"
 #include "Player/Player.h"
-#include "Player/PlayerBullet/PlayerBullet.h"
 #include "Enemy/Enemy.h"
-#include "Enemy/BossBullet/BossBullet.h"
 #include "Hit/Hit.h"
 
 void GameScene::Init()
 {
 	M_Player = std::make_shared<C_Player>();
-	M_PlayerBullet = std::make_shared<C_PlayerBullet>();
 	M_Enemy = std::make_shared<C_Enemy>();
-	M_BossBullet = std::make_shared<C_BossBullet>();
 	M_Hit = std::make_shared<C_Hit>();
 
-	M_BackGroundTex.Load("Texture/BackGround/Game/Space_BG (2 frames) (64 x 64).png");
+	M_BackGroundTex.Load("Texture/BackGround/Game/Game.png");
 	M_Player->Init();
 	M_Enemy->Init();
 	M_Hit->SetOwner(this);
@@ -28,17 +24,15 @@ void GameScene::Update()
 	
 	Hit();
 	
-	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+	
+	if (M_Enemy->GetAlive() == false)
 	{
-		if (keyFlg == false)
-		{
-			SceneManager::Instance().SetNextScene(SceneManager::SceneType::Result);
-			keyFlg = true;
-		}
+		SceneManager::Instance().SetNextScene(SceneManager::SceneType::Result);
 	}
-	else
+
+	if (M_Player->GetAlive() == false)
 	{
-		keyFlg = false;
+		SceneManager::Instance().SetNextScene(SceneManager::SceneType::GameOver);
 	}
 
 	//背景スクロール

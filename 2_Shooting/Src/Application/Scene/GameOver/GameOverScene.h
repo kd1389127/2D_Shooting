@@ -2,13 +2,13 @@
 
 #include "../Base/BaseScene.h"
 
-class TitleScene : public BaseScene
+class GameOverScene : public BaseScene
 {
 public:
 	//コンストラクタ
-	TitleScene() { Init(); }
+	GameOverScene() { Init(); }
 	//デストラクタ
-	~TitleScene() {}
+	~GameOverScene() {}
 
 	void Init()			override;
 	void Update()		override;
@@ -18,13 +18,12 @@ public:
 private:
 
 	KdTexture M_BackGroundTex;
-	KdTexture M_StartTex;
+	KdTexture M_EnterTex;
 	Math::Matrix	M_BackGroundMat;
-	Math::Matrix	M_StartMat;
+	Math::Matrix	M_EnterMat;
 
 	float m_alpha = 1.0f;
 	float m_addAlpha = 0.01f;
 
-	int GAMESTARTFlg;
 	bool keyFlg;
 };

@@ -8,8 +8,8 @@ void C_BossBullet::Init()
 	{
 		M_BulletPos[i] = { 0,0 };
 		M_BulletFlg[i] = false;
+		M_Radius = { 8.0f,8.0f };
 	}
-	M_Radius = { 8.0f,8.0f };
 	M_ScaleX = 1.5F;
 	M_ScaleY = 1.5F;
 	//自機の弾の発射待機時間

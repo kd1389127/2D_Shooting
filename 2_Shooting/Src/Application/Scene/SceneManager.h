@@ -15,7 +15,8 @@ public:
 	{
 		Title,
 		Game,
-		Result
+		Result,
+		GameOver
 	};
 
 	//Update前に実行するUpdate

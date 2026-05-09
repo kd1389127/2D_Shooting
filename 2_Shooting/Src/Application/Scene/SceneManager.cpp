@@ -2,6 +2,7 @@
 #include "Title/TitleScene.h"
 #include "Game/GameScene.h"
 #include "Result/ResultScene.h"
+#include "GameOver/GameOverScene.h"
 #include "Base/BaseScene.h"
 
 void SceneManager::PreUpdate()
@@ -49,6 +50,10 @@ void SceneManager::ChangeScene(SceneType _sceneType)
 	case SceneType::Result:
 		//アップキャスト
 		m_currentScene = std::make_shared<ResultScene>();
+		break;
+	case SceneType::GameOver:
+		//アップキャスト
+		m_currentScene = std::make_shared<GameOverScene>();
 		break;
 	}
 

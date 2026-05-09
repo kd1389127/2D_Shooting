@@ -26,6 +26,7 @@ public:
 	bool IsDead() const { return M_Hp <= 0; }
 	bool GetAlive() { return M_Alive; }
 	bool GetDamageFlg() { return M_DamageFlg; }
+	std::shared_ptr<C_BossBullet> GetBossBullet() { return M_BossBullet; }
 
 private:
 	//弾
