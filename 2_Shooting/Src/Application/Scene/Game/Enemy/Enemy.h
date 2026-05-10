@@ -46,6 +46,7 @@ private:
 	int				M_Hp;			// HP
 	int				M_MaxHp;		// MaxHp
 	bool			M_Alive;		// 生存フラグ
+	float			M_Angle;		//角度
 
 	bool M_DamageFlg = false;		//ダメージフラグ
 

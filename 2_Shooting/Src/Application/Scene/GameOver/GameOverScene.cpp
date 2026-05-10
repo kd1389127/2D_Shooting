@@ -45,7 +45,7 @@ void GameOverScene::Draw()
 	SHADER.m_spriteShader.DrawTex(&M_BackGroundTex, Math::Rectangle(0, 0, 1280, 720), 1.0F);
 
 	SHADER.m_spriteShader.SetMatrix(M_EnterMat);
-	SHADER.m_spriteShader.DrawTex(&M_EnterTex, Math::Rectangle(0, 0, 966, 78), m_alpha);
+	SHADER.m_spriteShader.DrawTex(&M_EnterTex, Math::Rectangle(0, 0, 1024, 72), m_alpha);
 }
 
 void GameOverScene::Release()

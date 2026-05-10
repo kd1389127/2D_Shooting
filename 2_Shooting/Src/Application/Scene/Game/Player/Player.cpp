@@ -18,14 +18,18 @@ void C_Player::Init()
 	M_Hp = 6;
 	M_MaxHp = 6;
 	M_Pos = { -450,0 };
-	M_Radius = { 8.0f,8.0f };
+	M_Radius = { 32.0f,32.0f };
 	M_Alive = true;
-	M_ScaleX = 2.5F;
-	M_ScaleY = 2.5F;
-	M_HpScaleX = 2.5F;
-	M_HpScaleY = 2.5F;
-	M_PlayerTex.Load("Texture/Player/Playership/Player_ship.png");
-	M_PlayerHpTex.Load("Texture/Player/HP/Player_life_icon.png");
+	M_ScaleX = 1.0F;
+	M_ScaleY = 1.0F;
+	M_HpScaleX = 1.5F;
+	M_HpScaleY = 1.5F;
+	M_BoostScaleX = 2.0F;
+	M_BoostScaleY = 2.0F;
+	AnimCnt = 0;
+	M_PlayerTex.Load("Texture/Player/Playership/SpaceShip.png");
+	M_PlayerHpTex.Load("Texture/Player/HP/Player_Life.png");
+	M_PlayerBoostTex.Load("Texture/Player/Playership/Boosters.png");
 
 	M_PlayerBullet->Init();
 	M_PlayerBullet->SetOwner(this);
@@ -39,6 +43,14 @@ void C_Player::Update()
 
 	// 座標確定処理
 	M_Pos += M_Move;
+
+	AnimCnt += 0.1f;  //アニメーションを次のコマへ進める
+
+	//終了チェック
+	if (AnimCnt > 2)
+	{
+		AnimCnt = 0;
+	}
 
 	M_PlayerBullet->Update();
 
@@ -62,27 +74,32 @@ void C_Player::Update()
 
 	M_ScaleMat = Math::Matrix::CreateScale(M_HpScaleX, M_HpScaleY, 1.0F);
 	M_TransMat = Math::Matrix::CreateTranslation(-600, 310, 0);
-	M_PlayerHp6Mat = M_ScaleMat * M_TransMat;	// 拡大×回転×移動
+	M_PlayerHp6Mat = M_ScaleMat * M_TransMat;	// 拡大×移動
 
 	M_ScaleMat = Math::Matrix::CreateScale(M_HpScaleX, M_HpScaleY, 1.0F);
 	M_TransMat = Math::Matrix::CreateTranslation(-570, 310, 0);
-	M_PlayerHp5Mat = M_ScaleMat * M_TransMat;	// 拡大×回転×移動
+	M_PlayerHp5Mat = M_ScaleMat * M_TransMat;	// 拡大×移動
 
 	M_ScaleMat = Math::Matrix::CreateScale(M_HpScaleX, M_HpScaleY, 1.0F);
 	M_TransMat = Math::Matrix::CreateTranslation(-540, 310, 0);
-	M_PlayerHp4Mat = M_ScaleMat * M_TransMat;	// 拡大×回転×移動
+	M_PlayerHp4Mat = M_ScaleMat * M_TransMat;	// 拡大×移動
 
 	M_ScaleMat = Math::Matrix::CreateScale(M_HpScaleX, M_HpScaleY, 1.0F);
 	M_TransMat = Math::Matrix::CreateTranslation(-510, 310, 0);
-	M_PlayerHp3Mat = M_ScaleMat * M_TransMat;	// 拡大×回転×移動
+	M_PlayerHp3Mat = M_ScaleMat * M_TransMat;	// 拡大×移動
 
 	M_ScaleMat = Math::Matrix::CreateScale(M_HpScaleX, M_HpScaleY, 1.0F);
 	M_TransMat = Math::Matrix::CreateTranslation(-480, 310, 0);
-	M_PlayerHp2Mat = M_ScaleMat * M_TransMat;	// 拡大×回転×移動
+	M_PlayerHp2Mat = M_ScaleMat * M_TransMat;	// 拡大×移動
 
 	M_ScaleMat = Math::Matrix::CreateScale(M_HpScaleX, M_HpScaleY, 1.0F);
 	M_TransMat = Math::Matrix::CreateTranslation(-450, 310, 0);
-	M_PlayerHp1Mat = M_ScaleMat * M_TransMat;	// 拡大×回転×移動
+	M_PlayerHp1Mat = M_ScaleMat * M_TransMat;	// 拡大×移動
+
+	M_ScaleMat = Math::Matrix::CreateScale(M_BoostScaleX, M_BoostScaleY, 1.0F);
+	M_RotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(270));
+	M_TransMat = Math::Matrix::CreateTranslation(M_Pos.x - 43, M_Pos.y, 0);
+	M_PlayerBoostMat = M_ScaleMat * M_RotationMat * M_TransMat;	// 拡大×回転×移動
 }
 
 void C_Player::Draw()
@@ -90,38 +107,41 @@ void C_Player::Draw()
 	if (!M_Alive)return;
 
 	SHADER.m_spriteShader.SetMatrix(M_PlayerMat);
-	SHADER.m_spriteShader.DrawTex(&M_PlayerTex, Math::Rectangle{ 16,0,16,16 },m_alpha);
+	SHADER.m_spriteShader.DrawTex(&M_PlayerTex, Math::Rectangle{ 0,0,64,64 },m_alpha);
 
 	if (M_Hp >= 6)
 	{
 		SHADER.m_spriteShader.SetMatrix(M_PlayerHp1Mat);
-		SHADER.m_spriteShader.DrawTex(&M_PlayerHpTex, Math::Rectangle{ 0,0,16,16 }, 1.0f);
+		SHADER.m_spriteShader.DrawTex(&M_PlayerHpTex, Math::Rectangle{ 0,0,32,32 }, 1.0f);
 	}
 	if (M_Hp >= 5)
 	{
 		SHADER.m_spriteShader.SetMatrix(M_PlayerHp2Mat);
-		SHADER.m_spriteShader.DrawTex(&M_PlayerHpTex, Math::Rectangle{ 0,0,16,16 }, 1.0f);
+		SHADER.m_spriteShader.DrawTex(&M_PlayerHpTex, Math::Rectangle{ 0,0,32,32 }, 1.0f);
 	}
 	if (M_Hp >= 4)
 	{
 		SHADER.m_spriteShader.SetMatrix(M_PlayerHp3Mat);
-		SHADER.m_spriteShader.DrawTex(&M_PlayerHpTex, Math::Rectangle{ 0,0,16,16 }, 1.0f);
+		SHADER.m_spriteShader.DrawTex(&M_PlayerHpTex, Math::Rectangle{ 0,0,32,32 }, 1.0f);
 	}
 	if (M_Hp >= 3)
 	{
 		SHADER.m_spriteShader.SetMatrix(M_PlayerHp4Mat);
-		SHADER.m_spriteShader.DrawTex(&M_PlayerHpTex, Math::Rectangle{ 0,0,16,16 }, 1.0f);
+		SHADER.m_spriteShader.DrawTex(&M_PlayerHpTex, Math::Rectangle{ 0,0,32,32 }, 1.0f);
 	}
 	if (M_Hp >= 2)
 	{
 		SHADER.m_spriteShader.SetMatrix(M_PlayerHp5Mat);
-		SHADER.m_spriteShader.DrawTex(&M_PlayerHpTex, Math::Rectangle{ 0,0,16,16 }, 1.0f);
+		SHADER.m_spriteShader.DrawTex(&M_PlayerHpTex, Math::Rectangle{ 0,0,32,32 }, 1.0f);
 	}
 	if (M_Hp >= 1)
 	{
 		SHADER.m_spriteShader.SetMatrix(M_PlayerHp6Mat);
-		SHADER.m_spriteShader.DrawTex(&M_PlayerHpTex, Math::Rectangle{ 0,0,16,16 }, 1.0f);
+		SHADER.m_spriteShader.DrawTex(&M_PlayerHpTex, Math::Rectangle{ 0,0,32,32 }, 1.0f);
 	}
+
+	SHADER.m_spriteShader.SetMatrix(M_PlayerBoostMat);
+	SHADER.m_spriteShader.DrawTex(&M_PlayerBoostTex, Math::Rectangle{(int)AnimCnt * 16,0,16,16},m_alpha);
 
 	// 無敵中は点滅（5フレームごとに描画スキップ）
 	if (M_IsInvincible)
