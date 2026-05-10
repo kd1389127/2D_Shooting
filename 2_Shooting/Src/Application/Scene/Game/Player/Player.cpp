@@ -55,7 +55,7 @@ void C_Player::Update()
 	M_PlayerBullet->Update();
 
 	// 無敵時間のカウントダウン
-	const float delta = 1.0f / 60.0f;
+	const float delta = 0.5f / 60.0f;
 	if (M_IsInvincible) 
 	{
 		M_InvincibleTime -= delta;
@@ -67,6 +67,11 @@ void C_Player::Update()
 
 	m_alpha += m_addAlpha;
 
+	if (m_alpha <= 0)
+	{
+		m_alpha = 1.0f;
+	}
+
 	M_ScaleMat = Math::Matrix::CreateScale(M_ScaleX, M_ScaleY, 1.0F);
 	M_TransMat = Math::Matrix::CreateTranslation(M_Pos.x, M_Pos.y, 0);
 	M_RotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(270)); //回転行列
@@ -77,23 +82,23 @@ void C_Player::Update()
 	M_PlayerHp6Mat = M_ScaleMat * M_TransMat;	// 拡大×移動
 
 	M_ScaleMat = Math::Matrix::CreateScale(M_HpScaleX, M_HpScaleY, 1.0F);
-	M_TransMat = Math::Matrix::CreateTranslation(-570, 310, 0);
+	M_TransMat = Math::Matrix::CreateTranslation(-550, 310, 0);
 	M_PlayerHp5Mat = M_ScaleMat * M_TransMat;	// 拡大×移動
 
 	M_ScaleMat = Math::Matrix::CreateScale(M_HpScaleX, M_HpScaleY, 1.0F);
-	M_TransMat = Math::Matrix::CreateTranslation(-540, 310, 0);
+	M_TransMat = Math::Matrix::CreateTranslation(-500, 310, 0);
 	M_PlayerHp4Mat = M_ScaleMat * M_TransMat;	// 拡大×移動
 
 	M_ScaleMat = Math::Matrix::CreateScale(M_HpScaleX, M_HpScaleY, 1.0F);
-	M_TransMat = Math::Matrix::CreateTranslation(-510, 310, 0);
+	M_TransMat = Math::Matrix::CreateTranslation(-450, 310, 0);
 	M_PlayerHp3Mat = M_ScaleMat * M_TransMat;	// 拡大×移動
 
 	M_ScaleMat = Math::Matrix::CreateScale(M_HpScaleX, M_HpScaleY, 1.0F);
-	M_TransMat = Math::Matrix::CreateTranslation(-480, 310, 0);
+	M_TransMat = Math::Matrix::CreateTranslation(-400, 310, 0);
 	M_PlayerHp2Mat = M_ScaleMat * M_TransMat;	// 拡大×移動
 
 	M_ScaleMat = Math::Matrix::CreateScale(M_HpScaleX, M_HpScaleY, 1.0F);
-	M_TransMat = Math::Matrix::CreateTranslation(-450, 310, 0);
+	M_TransMat = Math::Matrix::CreateTranslation(-350, 310, 0);
 	M_PlayerHp1Mat = M_ScaleMat * M_TransMat;	// 拡大×移動
 
 	M_ScaleMat = Math::Matrix::CreateScale(M_BoostScaleX, M_BoostScaleY, 1.0F);
@@ -148,15 +153,10 @@ void C_Player::Draw()
 	{
 		static int blinkFrame = 0;
 		blinkFrame++;
-		if ((blinkFrame / 10) % 2 == 0)
+		if ((blinkFrame / 5) % 2 == 0)
 		{
 			// 描画スキップ
 			if (m_alpha > 1.0f)
-			{
-				m_alpha = 1.0f;
-				m_addAlpha *= -4;
-			}
-			else if (m_alpha < 0.0f)
 			{
 				m_alpha = 1.0f;
 				m_addAlpha *= -4;

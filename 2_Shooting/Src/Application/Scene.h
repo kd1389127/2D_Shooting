@@ -1,9 +1,9 @@
-//#pragma once
+#pragma once
 ////#include "Player/Player.h"
-//
-//class Scene
-//{
-//private:
+
+class Scene
+{
+private:
 //
 //	//プレイヤー
 //	//KdTexture	M_PlayerTex;
@@ -167,7 +167,7 @@
 //	float GAMESTARTSize;
 //	int GAMESTARTFlg;
 //
-//public:
+public:
 //
 //	// 初期設定
 //	void Init();
@@ -186,8 +186,8 @@
 //
 //	void Action();
 //
-//	// GUI処理
-//	void ImGuiUpdate();
+	// GUI処理
+	void ImGuiUpdate();
 //
 //	//リセット
 //	void RESET();
@@ -195,16 +195,16 @@
 //	//爆発
 //	void Explosion(float X, float Y);
 //
-//private:
+private:
 //
 //	Scene() {}
 //
-//public:
-//	static Scene& GetInstance()
-//	{
-//		static Scene instance;
-//		return instance;
-//	}
-//};
+public:
+ 	static Scene& GetInstance()
+	{
+		static Scene instance;
+		return instance;
+	}
+};
 //
-//#define SCENE Scene::GetInstance()
+#define SCENE Scene::GetInstance()

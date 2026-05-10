@@ -17,8 +17,7 @@ public:
 	void Shot();
 	void Release();
 
-	//弾との当たり判定
-	//void PlayerBulletHit();
+	void SetFlg(int i,bool A_Flg) { M_BulletFlg[i] = A_Flg; }
 
 	Math::Vector2 GetPos(int i) { return M_BulletPos[i]; }
 	float GetRadiusX() { return M_Radius.x * fabs(M_ScaleX); }

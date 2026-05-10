@@ -26,6 +26,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpszArgs, int
 	return 0;
 }
 
+void Application::ImGuiUpdate()
+{
+	
+	ImGui::SetNextWindowPos(ImVec2(20, 20), ImGuiSetCond_Once);
+	ImGui::SetNextWindowSize(ImVec2(200, 100), ImGuiSetCond_Once);
+	
+	// デバッグウィンドウ
+	if (ImGui::Begin("Debug Window"))
+	{
+		ImGui::Text("FPS : %d", APP.m_fps);
+	}
+	ImGui::End();
+}
 
 // アプリケーション初期設定
 bool Application::Init(int w, int h)
@@ -34,7 +47,7 @@ bool Application::Init(int w, int h)
 	//===================================================================
 	// ウィンドウ作成
 	//===================================================================
-	if (m_window.Create(w, h, "DirectX", "Window") == false) {
+	if (m_window.Create(w, h, "LAST PIERROT", "Window") == false) {
 		MessageBoxA(nullptr, "ウィンドウ作成に失敗", "エラー", MB_OK);
 		return false;
 	}
@@ -217,7 +230,7 @@ void Application::Execute()
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
 		// ImGui処理
-		//SCENE.ImGuiUpdate();
+		SCENE.ImGuiUpdate();
 		// GUI描画実行
 		ImGui::Render();
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());

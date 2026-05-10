@@ -27,6 +27,8 @@ public:
 	int				m_fps = 0;					// Œ»İ‚ÌFPS’l
 	int				m_maxFps = 60;				// Å‘åFPS
 
+	// GUIˆ—
+	void ImGuiUpdate();
 
 private:
 

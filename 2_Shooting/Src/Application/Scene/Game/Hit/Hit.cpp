@@ -41,7 +41,8 @@ void C_Hit::PlayerBulletHit()
 			float Sum = M_PlayerBullet->GetRadiusX() + M_Enemy->GetRadiusX();
 			if (z < Sum)
 			{
-				M_Enemy->SetAlive(false);
+				M_Enemy->TakeDamage(1);
+				M_PlayerBullet->SetFlg(i, false);
 				break;
 			}
 		}
@@ -65,7 +66,35 @@ void C_Hit::BossBulletHit()
 		if (z < Sum)
 		{
 			M_Player->TakeDamage(1);
+			M_BossBullet->SetFlg(i, false);
+			break;
+		}
+	}
+	for (int i = 0; i < M_BossBullet->GetBulletNum(); ++i)
+	{
+		float x = M_Player->GetPos().x - M_BossBullet->GetUpPos(i).x;
+		float y = M_Player->GetPos().y - M_BossBullet->GetUpPos(i).y;
+		float z = sqrt(x * x + y * y);
+		float Sum = M_Player->GetRadiusX() + M_BossBullet->GetRadiusX();
+		if (z < Sum)
+		{
+			M_Player->TakeDamage(1);
+			M_BossBullet->SetUpFlg(i, false);
+			break;
+		}
+	}
+	for (int i = 0; i < M_BossBullet->GetBulletNum(); ++i)
+	{
+		float x = M_Player->GetPos().x - M_BossBullet->GetDownPos(i).x;
+		float y = M_Player->GetPos().y - M_BossBullet->GetDownPos(i).y;
+		float z = sqrt(x * x + y * y);
+		float Sum = M_Player->GetRadiusX() + M_BossBullet->GetRadiusX();
+		if (z < Sum)
+		{
+			M_Player->TakeDamage(1);
+			M_BossBullet->SetDownFlg(i, false);
 			break;
 		}
 	}
 }
+
