@@ -71,4 +71,6 @@ void GameScene::Hit()
 	M_Hit->BossHit();
 	M_Hit->PlayerBulletHit();
 	M_Hit->BossBulletHit();
+	M_Hit->EnemyHit();
+	M_Hit->LastBossBulletHit();
 }

@@ -14,6 +14,7 @@ public:
 	void Init();
 	void Update();
 	void Draw();
+	void Action();
 	void TakeDamage(int dmg);
 
 	void SetAlive(bool A_Alive) { M_Alive = A_Alive; }
@@ -51,6 +52,18 @@ private:
 	bool			M_Alive;		// 生存フラグ
 	float			M_Angle;		//角度
 
+	//演出
+	KdTexture		M_EnemyTex;
+	static const int EnemyNum = 30;
+	Math::Matrix	M_EnemyMat[EnemyNum];
+	Math::Vector2	M_EnemyPos[EnemyNum];		// 座標
+	Math::Vector2	M_EnemyMove;				// 移動量
+	float			M_EnemyScaleX;				// 横拡大率
+	float			M_EnemyScaleY;				// 縦拡大率
+	bool			M_EnemyFlg[EnemyNum];		//フラグ
+	int				M_EnemyWait;
+
+
 	bool M_DamageFlg = false;		//ダメージフラグ
 
 	bool  M_IsInvincible;			//一定期間の無敵フラグ
@@ -58,6 +71,12 @@ private:
 
 	float m_alpha = 1.0f;
 	float m_addAlpha = 0.01f;
+
+	int M_State;		//現在の状態
+
+	int M_Wait0;
+	int M_Wait1;
+	int M_Wait2;
 
 public:
 	bool IsInvincible() const { return M_IsInvincible; }

@@ -5,16 +5,33 @@ void C_Enemy::Init()
 {
 	M_BossBullet = std::make_shared<C_BossBullet>();
 
+	M_Tex.Load("Texture/Boss/SpaceShip_Boss.png");
+	M_EnemyTex.Load("Texture/Bullet/Enemy.png");
 	M_Pos = { 450,0 };
 	M_UpPos = { 450,130 };
 	M_DownPos = { 450,-130 };
+	M_Move = { 0,0 };
 	M_Alive = true;
 	M_ScaleX = 3.5F;
 	M_ScaleY = 3.5F;
-	M_Radius = { 55.0f,55.0f };
+	M_Radius = { 47.0f,47.0f };
 	M_Angle = 0;
-	M_Hp = 20;
-	M_Tex.Load("Texture/Boss/SpaceShip_Boss.png");
+	M_Hp = 50;
+	
+	for (int i = 0; i < EnemyNum; ++i)
+	{
+		M_EnemyPos[i] = { 450,200 };
+		M_EnemyFlg[i] = false;
+		M_EnemyScaleX = 1.5F;
+		M_EnemyScaleY = 1.5F;
+	}
+	M_EnemyWait = 0;
+
+	M_State = 0;
+
+	M_Wait0 = 550;
+	M_Wait1 = 550;
+	M_Wait2 = 550;
 
 	M_BossBullet->Init();
 	M_BossBullet->SetOwner(this);
@@ -26,7 +43,16 @@ void C_Enemy::Update()
 
 	// 座標確定処理
 	M_Pos += M_Move;
-	
+
+	for (int i = 0; i < EnemyNum; ++i)
+	{
+		if (M_EnemyFlg[i] == true)
+		{
+			M_EnemyPos[i] += M_EnemyMove;
+		}
+	}
+
+	Action();
 	M_BossBullet->Update();
 
 	//毎フレーム0.5度ずつ回転
@@ -56,6 +82,15 @@ void C_Enemy::Update()
 	M_TransMat = Math::Matrix::CreateTranslation(M_Pos.x, M_Pos.y, 0);
 	M_Mat = M_ScaleMat * M_RotationMat * M_TransMat;	// 拡大×回転×移動
 
+	for (int i = 0; i < EnemyNum; ++i)
+	{
+		if (M_EnemyFlg[i] == true)
+		{
+			M_ScaleMat = Math::Matrix::CreateScale(M_EnemyScaleX, M_EnemyScaleY, 1.0F);
+			M_TransMat = Math::Matrix::CreateTranslation(M_EnemyPos[i].x, M_EnemyPos[i].y, 0);
+			M_EnemyMat[i] = M_ScaleMat * M_TransMat;	// 拡大×回転×移動
+		}
+	}
 }
 
 void C_Enemy::Draw()
@@ -63,6 +98,15 @@ void C_Enemy::Draw()
 	if (!M_Alive)return;
 	SHADER.m_spriteShader.SetMatrix(M_Mat);
 	SHADER.m_spriteShader.DrawTex(&M_Tex, Math::Rectangle{ 0,0,110,110 }, m_alpha);
+
+	for (int i = 0; i < EnemyNum; ++i)
+	{
+		if (M_EnemyFlg[i] == true)
+		{
+			SHADER.m_spriteShader.SetMatrix(M_EnemyMat[i]);
+			SHADER.m_spriteShader.DrawTex(&M_EnemyTex, Math::Rectangle{ 0,0,32,32 }, 1.0f);
+		}
+	}
 
 	// 無敵中は点滅（5フレームごとに描画スキップ）
 	if (M_IsInvincible)
@@ -86,6 +130,98 @@ void C_Enemy::Draw()
 	}
 
 	M_BossBullet->Draw();
+}
+
+void C_Enemy::Action()
+{
+	switch (M_State)
+	{
+	case 0:
+		M_BossBullet->BossAction0();
+		M_Wait0--;
+		if (M_Wait0 < 0)
+		{
+			M_Wait0 = 0;
+		}
+		if (M_Wait0 == 0)
+		{
+			if (M_State == 0) { M_State = 1; }
+		}
+		break;
+
+	case 1:
+		M_BossBullet->BossAction1();
+		M_Wait1--;
+		if (M_Wait1 < 0)
+		{
+			M_Wait1 = 0;
+		}
+
+		if (M_Wait1 < 450)
+		{
+			M_EnemyMove.y = 5.0f;
+			for (int i = 0; i < EnemyNum; ++i)
+			{
+				if (M_EnemyWait <= 0)
+				{
+					if (M_EnemyFlg[i] == false)
+					{
+						M_EnemyFlg[i] = true;
+						M_EnemyWait = 10;		//待機時間10フレーム
+					}
+				}
+			}
+			
+			//敵の発射待機時間
+			M_EnemyWait--;
+			if (M_EnemyWait <= 0)
+			{
+				M_EnemyWait = 0;
+			}
+		}
+
+		if (M_Wait1 == 0)
+		{
+			if (M_State == 1) { M_State = 2; }
+		}
+		break;
+
+	case 2:
+		M_BossBullet->BossAction2();
+		for (int i = 0; i < EnemyNum; ++i)
+		{
+			M_EnemyFlg[i] = false;
+		}
+
+		M_Wait2--;
+		if (M_Wait2 < 0)
+		{
+			M_Wait2 = 0;
+		}
+		if (M_Wait2 == 0)
+		{
+			if (M_State == 2) { M_State = 0; }
+			M_Wait0 = 550;
+		}
+		break;
+
+	case 3:
+		M_BossBullet->BossAction3();
+		break;
+
+	case 4:
+		M_BossBullet->BossAction4();
+		break;
+
+	default:
+		break;
+	}
+	
+	if (M_Hp == 10)
+	{
+		M_State = 4;
+	}
+
 }
 
 void C_Enemy::TakeDamage(int dmg)

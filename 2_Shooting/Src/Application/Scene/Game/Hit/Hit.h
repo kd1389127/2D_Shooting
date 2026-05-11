@@ -22,6 +22,10 @@ public:
 	//敵との攻撃判定
 	void BossBulletHit();
 
+	void EnemyHit();
+
+	void LastBossBulletHit();
+
 	void SetOwner(GameScene* _owner) { M_Owner = _owner; }
 
 private:

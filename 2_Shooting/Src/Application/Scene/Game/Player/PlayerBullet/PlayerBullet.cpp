@@ -21,6 +21,7 @@ void C_PlayerBullet::Update()
 	for (int i = 0; i < BulletNum; ++i)
 	{
 		M_BulletPos[i].x += 20;
+		
 
 		if (M_BulletPos[i].x > 640)
 		{
