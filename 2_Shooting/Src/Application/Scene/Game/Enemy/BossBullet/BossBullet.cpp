@@ -21,7 +21,7 @@ void C_BossBullet::Init()
 		M_EnemyFlg[i] = false;
 		M_EnemyUpFlg[i] = false;
 		M_EnemyDownFlg[i] = false;
-		M_Radius = { 16.0f,16.0f };
+		M_EnemyRadius = { 16.0f,16.0f };
 	}
 
 	for (int i = 0; i < LastBulletNum; ++i)
@@ -29,6 +29,7 @@ void C_BossBullet::Init()
 		M_LastBulletFlg[i] = false;
 		M_LastBulletUpFlg[i] = false;
 		M_LastBulletDownFlg[i] = false;
+		M_LastRadius = { 5.0f,5.0 };
 	}
 
 	M_ScaleX = 1.5F;
@@ -40,9 +41,11 @@ void C_BossBullet::Init()
 	M_LastScaleX = 1.5F;
 	M_LastScaleY = 1.5F;
 
-	//自機の弾の発射待機時間
+	//敵の弾の発射待機時間
 	M_ShotWait = 0;
 	M_ShotTime = 300;
+	M_EnemyShotTime = 200;
+	M_LastShotTime = 150;
 
 	state = 0;
 }
@@ -70,9 +73,9 @@ void C_BossBullet::Update()
 
 	for (int i = 0; i < EnemyNum; ++i)
 	{
-		if (M_BulletPos[i].y <= -800) { M_EnemyFlg[i] = false; }
-		if (M_BulletUpPos[i].y <= -800) { M_EnemyUpFlg[i] = false; }
-		if (M_BulletDownPos[i].y <= -800) { M_EnemyDownFlg[i] = false; }
+		if (M_BulletPos[i].y <= -400) { M_EnemyFlg[i] = false; }
+		if (M_BulletUpPos[i].y <= -400) { M_EnemyUpFlg[i] = false; }
+		if (M_BulletDownPos[i].y <= -400) { M_EnemyDownFlg[i] = false; }
 
 		M_ScaleMat = Math::Matrix::CreateScale(M_EnemyScaleX, M_EnemyScaleY, 1.0F);
 		M_TransMat = Math::Matrix::CreateTranslation(M_BulletPos[i].x, M_BulletPos[i].y, 0);
@@ -169,18 +172,31 @@ void C_BossBullet::Draw()
 
 void C_BossBullet::BossAction0()
 {
+	for (int i = 0; i < EnemyNum; ++i)
+	{
+		if (M_EnemyFlg[i] == true) { M_EnemyFlg[i] = false; }
+		if (M_EnemyUpFlg[i] == true) { M_EnemyUpFlg[i] = false; }
+		if (M_EnemyDownFlg[i] == true) { M_EnemyDownFlg[i] = false; }
+	}
+
+	for (int i = 0; i < LastBulletNum; ++i)
+	{
+		if (M_LastBulletFlg[i] == true) { M_LastBulletFlg[i] = false; }
+		if (M_LastBulletUpFlg[i] == true) { M_LastBulletUpFlg[i] = false; }
+		if (M_LastBulletDownFlg[i] == true) { M_LastBulletDownFlg[i] = false; }
+	}
+
 	for (int i = 0; i < BulletNum; ++i)
 	{
-		M_BulletPos[i].x -= 5;
-		M_BulletUpPos[i].x -= 5;
-		M_BulletDownPos[i].x -= 5;
+		M_BulletPos[i].x -= 7.5;
+		M_BulletUpPos[i].x -= 7.5;
+		M_BulletDownPos[i].x -= 7.5;
 
 		//待機時間が0の場合
 		if (M_ShotWait <= 0 && M_ShotTime >= 0)
 		{
 			if (M_BulletFlg[i] == false && M_BulletUpFlg[i] == false && M_BulletDownFlg[i] == false)	//弾が未発射の場合
 			{
-
 				//弾の座標を自機の座標にセット
 				M_BulletPos[i] = M_Owner->GetPos();
 				M_BulletUpPos[i] = M_Owner->GetUpPos();
@@ -215,6 +231,20 @@ void C_BossBullet::BossAction0()
 
 void C_BossBullet::BossAction1()
 {
+	for (int i = 0; i < EnemyNum; ++i)
+	{
+		if (M_EnemyFlg[i] == true) { M_EnemyFlg[i] = false; }
+		if (M_EnemyUpFlg[i] == true) { M_EnemyUpFlg[i] = false; }
+		if (M_EnemyDownFlg[i] == true) { M_EnemyDownFlg[i] = false; }
+	}
+
+	for (int i = 0; i < LastBulletNum; ++i)
+	{
+		if (M_LastBulletFlg[i] == true) { M_LastBulletFlg[i] = false; }
+		if (M_LastBulletUpFlg[i] == true) { M_LastBulletUpFlg[i] = false; }
+		if (M_LastBulletDownFlg[i] == true) { M_LastBulletDownFlg[i] = false; }
+	}
+
 	for (int i = 0; i < BulletNum; ++i)
 	{
 		if (M_BulletPos[i].y == -150) { M_BulletPos[i].x -= Rnd() * 10 + 1; M_BulletPos[i].y += 5; }
@@ -224,11 +254,11 @@ void C_BossBullet::BossAction1()
 		if (M_BulletPos[i].x <= -250) { M_BulletPos[i].y += 10; }
 		if (M_BulletDownPos[i].x <= -250) { M_BulletDownPos[i].y -= 10; }
 
-		M_BulletPos[i].x -= 5;
+		M_BulletPos[i].x -= 6;
 		M_BulletPos[i].y -= 5;
-		M_BulletUpPos[i].x -= 5;
+		M_BulletUpPos[i].x -= 6;
 		M_BulletUpPos[i].y -= 5;
-		M_BulletDownPos[i].x -= 5;
+		M_BulletDownPos[i].x -= 6;
 		M_BulletDownPos[i].y += 5;
 
 		//待機時間が0の場合
@@ -270,6 +300,20 @@ void C_BossBullet::BossAction1()
 
 void C_BossBullet::BossAction2()
 {
+	for (int i = 0; i < BulletNum; ++i)
+	{
+		if (M_BulletFlg[i] == true) { M_BulletFlg[i] = false; }
+		if (M_BulletUpFlg[i] == true) { M_BulletUpFlg[i] = false; }
+		if (M_BulletDownFlg[i] == true) { M_BulletDownFlg[i] = false; }
+	}
+
+	for (int i = 0; i < LastBulletNum; ++i)
+	{
+		if (M_LastBulletFlg[i] == true) { M_LastBulletFlg[i] = false; }
+		if (M_LastBulletUpFlg[i] == true) { M_LastBulletUpFlg[i] = false; }
+		if (M_LastBulletDownFlg[i] == true) { M_LastBulletDownFlg[i] = false; }
+	}
+
 	for (int i = 0; i < EnemyNum; ++i)
 	{
 		M_BulletPos[i].y -= 5;
@@ -277,17 +321,17 @@ void C_BossBullet::BossAction2()
 		M_BulletDownPos[i].y -= 5;
 
 		//待機時間が0の場合
-		if (M_ShotWait <= 0 && M_ShotTime >= 0)
+		if (M_ShotWait <= 0 && M_EnemyShotTime >= 0)
 		{
 			if (M_EnemyFlg[i] == false && M_EnemyUpFlg[i] == false && M_EnemyDownFlg[i] == false)	//弾が未発射の場合
 			{
 
 				//弾の座標を自機の座標にセット
-				M_BulletPos[i].x = Rnd() * 200;
+				M_BulletPos[i].x = Rnd() * 150;
 				M_BulletPos[i].y = 360;
-				M_BulletUpPos[i].x = Rnd() * 100 - 300;
+				M_BulletUpPos[i].x = Rnd() * 100 - 250;
 				M_BulletUpPos[i].y = 360;
-				M_BulletDownPos[i].x = Rnd() * -300 - 300;
+				M_BulletDownPos[i].x = Rnd() * -300 - 250;
 				M_BulletDownPos[i].y = 360;
 
 				M_EnemyFlg[i] = true;	//発射状態に
@@ -309,39 +353,44 @@ void C_BossBullet::BossAction2()
 	}
 
 	//後隙
-	M_ShotTime--;
-	if (M_ShotTime <= -300)
+	M_EnemyShotTime--;
+	if (M_EnemyShotTime <= -200)
 	{
-		M_ShotTime = 300;
+		M_EnemyShotTime = 200;
 	}
 }
 
 void C_BossBullet::BossAction3()
-{
-
-}
-
-void C_BossBullet::BossAction4()
 {
 	for (int i = 0; i < BulletNum; ++i)
 	{
 		if (M_BulletFlg[i] == true) { M_BulletFlg[i] = false; }
 		if (M_BulletUpFlg[i] == true) { M_BulletUpFlg[i] = false; }
 		if (M_BulletDownFlg[i] == true) { M_BulletDownFlg[i] = false; }
+	}
 
+	for (int i = 0; i < EnemyNum; ++i)
+	{
+		if (M_EnemyFlg[i] == true) { M_EnemyFlg[i] = false; }
+		if (M_EnemyUpFlg[i] == true) { M_EnemyUpFlg[i] = false; }
+		if (M_EnemyDownFlg[i] == true) { M_EnemyDownFlg[i] = false; }
 	}
 
 	for (int i = 0; i < LastBulletNum; ++i)
 	{
 		M_BulletPos[i].x -= 2;
-		M_BulletUpPos[i].x -= 5;
-		M_BulletDownPos[i].x -= 6;
+		M_BulletUpPos[i].x -= 2;
+		M_BulletDownPos[i].x -= 2;
+
+		M_BulletPos[i].y = Rnd() * 201 - 100;
+		M_BulletUpPos[i].y = Rnd() * 350 + 1;
+		M_BulletDownPos[i].y = Rnd() * 351 - 350;
 
 		M_LastScaleX = 10;
 		M_LastScaleY = 10;
 
 		//待機時間が0の場合
-		if (M_ShotWait <= 0 && M_ShotTime >= 0)
+		if (M_ShotWait <= 0 && M_LastShotTime >= 0)
 		{
 			if (M_LastBulletFlg[i] == false && M_LastBulletUpFlg[i] == false && M_LastBulletDownFlg[i] == false)	//弾が未発射の場合
 			{
@@ -369,10 +418,10 @@ void C_BossBullet::BossAction4()
 	}
 
 	//後隙
-	M_ShotTime--;
-	if (M_ShotTime <= -300)
+	M_LastShotTime--;
+	if (M_LastShotTime <= -150)
 	{
-		M_ShotTime = 300;
+		M_LastShotTime = 150;
 	}
 }
 

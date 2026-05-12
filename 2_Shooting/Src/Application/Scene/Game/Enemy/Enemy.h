@@ -35,6 +35,7 @@ private:
 	std::shared_ptr<C_BossBullet> M_BossBullet = nullptr;
 
 	KdTexture		M_Tex;		
+	KdTexture		M_LastTex;		
 	Math::Matrix	M_ScaleMat;		// 拡大行列
 	Math::Matrix	M_TransMat;		// 移動行列
 	Math::Matrix	M_RotationMat;	// 回転行列
@@ -77,6 +78,12 @@ private:
 	int M_Wait0;
 	int M_Wait1;
 	int M_Wait2;
+
+	bool M_WaitFlg0;
+	bool M_WaitFlg1;
+	bool M_WaitFlg2;
+
+	bool M_ChangeFlg;	//画像変化
 
 public:
 	bool IsInvincible() const { return M_IsInvincible; }

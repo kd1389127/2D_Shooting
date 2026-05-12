@@ -18,7 +18,6 @@ public:
 	void BossAction1();
 	void BossAction2();
 	void BossAction3();
-	void BossAction4();
 	void Release();
 
 	void SetFlg(int i, bool A_Flg) { M_BulletFlg[i] = A_Flg; }
@@ -40,15 +39,30 @@ public:
 	float GetRadiusY() { return M_Radius.y * M_ScaleY; }
 	float GetEnemyRadiusX() { return M_EnemyRadius.x * fabs(M_EnemyScaleX); }
 	float GetEnemyRadiusY() { return M_EnemyRadius.y * M_EnemyScaleY; }
+	float GetLastRadiusX() { return M_LastRadius.x * fabs(M_ScaleX); }
+	float GetLastRadiusY() { return M_LastRadius.y * M_ScaleY; }
 	static const int	GetBulletNum() { return BulletNum; }
 	static const int	GetEnemyNum() { return EnemyNum; }
 	static const int	GetLastBulletNum() { return LastBulletNum; }
+
+	bool GetFlg(int i) { return M_BulletFlg[i]; }
+	bool GetUpFlg(int i) { return M_BulletUpFlg[i]; }
+	bool GetDownFlg(int i) { return M_BulletDownFlg[i]; }
+
+	bool GetEnemyFlg(int i) { return M_EnemyFlg[i]; }
+	bool GetEnemyUpFlg(int i) { return M_EnemyUpFlg[i]; }
+	bool GetEnemyDownFlg(int i) { return M_EnemyDownFlg[i]; }
+
+	bool GetLastFlg(int i) { return M_LastBulletFlg[i]; }
+	bool GetLastUpFlg(int i) { return M_LastBulletUpFlg[i]; }
+	bool GetLastDownFlg(int i) { return M_LastBulletDownFlg[i]; }
+
 	void SetOwner(C_Enemy* _owner) { M_Owner = _owner; }
 	float Rnd();
 private:
 
 	static const int BulletNum = 100;
-	static const int EnemyNum = 150;
+	static const int EnemyNum = 200;
 	static const int LastBulletNum = 5;
 
 	KdTexture		M_Tex;
@@ -74,6 +88,7 @@ private:
 	Math::Vector2	M_Move[BulletNum];			// 移動量
 	Math::Vector2	M_Radius;					// 半径
 	Math::Vector2	M_EnemyRadius;				// 半径
+	Math::Vector2	M_LastRadius;				// 半径
 	float			M_ScaleX;					// 横拡大率
 	float			M_ScaleY;					// 縦拡大率
 
@@ -97,7 +112,8 @@ private:
 
 	int M_ShotWait;		//発射待機時間
 	int M_ShotTime;		//後隙
-	//int M_ShotTime1;	//後隙
+	int M_EnemyShotTime;		//後隙
+	int M_LastShotTime;	//後隙
 
 	int state;		//現在の状態
 

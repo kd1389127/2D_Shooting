@@ -47,7 +47,7 @@ bool Application::Init(int w, int h)
 	//===================================================================
 	// ウィンドウ作成
 	//===================================================================
-	if (m_window.Create(w, h, "LAST PIERROT", "Window") == false) {
+	if (m_window.Create(w, h, "THE LAST PILOT", "Window") == false) {
 		MessageBoxA(nullptr, "ウィンドウ作成に失敗", "エラー", MB_OK);
 		return false;
 	}
@@ -77,6 +77,9 @@ bool Application::Init(int w, int h)
 		MessageBoxA(m_window.GetWndHandle(), errorMsg.c_str(), "Direct3D初期化失敗", MB_OK | MB_ICONSTOP);
 		return false;
 	}
+
+	//マウスカーソルの処理
+	ShowCursor(FALSE);
 
 	// フルスクリーン設定
 	if (bFullScreen) {

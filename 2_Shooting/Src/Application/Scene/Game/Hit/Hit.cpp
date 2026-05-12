@@ -59,41 +59,50 @@ void C_Hit::BossBulletHit()
 
 	for (int i = 0; i < M_BossBullet->GetBulletNum(); ++i)
 	{
-		float x = M_Player->GetPos().x - M_BossBullet->GetPos(i).x;
-		float y = M_Player->GetPos().y - M_BossBullet->GetPos(i).y;
-		float z = sqrt(x * x + y * y);
-		float Sum = M_Player->GetRadiusX() + M_BossBullet->GetRadiusX();
-		if (z < Sum)
+		if (M_BossBullet->GetFlg(i) == true)
 		{
-			M_Player->TakeDamage(1);
-			M_BossBullet->SetFlg(i, false);
-			break;
+			float x = M_Player->GetPos().x - M_BossBullet->GetPos(i).x;
+			float y = M_Player->GetPos().y - M_BossBullet->GetPos(i).y;
+			float z = sqrt(x * x + y * y);
+			float Sum = M_Player->GetRadiusX() + M_BossBullet->GetRadiusX();
+			if (z < Sum)
+			{
+				M_Player->TakeDamage(1);
+				M_BossBullet->SetFlg(i, false);
+				break;
+			}
 		}
 	}
 	for (int i = 0; i < M_BossBullet->GetBulletNum(); ++i)
 	{
-		float x = M_Player->GetPos().x - M_BossBullet->GetUpPos(i).x;
-		float y = M_Player->GetPos().y - M_BossBullet->GetUpPos(i).y;
-		float z = sqrt(x * x + y * y);
-		float Sum = M_Player->GetRadiusX() + M_BossBullet->GetRadiusX();
-		if (z < Sum)
+		if (M_BossBullet->GetUpFlg(i) == true)
 		{
-			M_Player->TakeDamage(1);
-			M_BossBullet->SetUpFlg(i, false);
-			break;
+			float x = M_Player->GetPos().x - M_BossBullet->GetUpPos(i).x;
+			float y = M_Player->GetPos().y - M_BossBullet->GetUpPos(i).y;
+			float z = sqrt(x * x + y * y);
+			float Sum = M_Player->GetRadiusX() + M_BossBullet->GetRadiusX();
+			if (z < Sum)
+			{
+				M_Player->TakeDamage(1);
+				M_BossBullet->SetUpFlg(i, false);
+				break;
+			}
 		}
 	}
 	for (int i = 0; i < M_BossBullet->GetBulletNum(); ++i)
 	{
-		float x = M_Player->GetPos().x - M_BossBullet->GetDownPos(i).x;
-		float y = M_Player->GetPos().y - M_BossBullet->GetDownPos(i).y;
-		float z = sqrt(x * x + y * y);
-		float Sum = M_Player->GetRadiusX() + M_BossBullet->GetRadiusX();
-		if (z < Sum)
+		if (M_BossBullet->GetDownFlg(i) == true)
 		{
-			M_Player->TakeDamage(1);
-			M_BossBullet->SetDownFlg(i, false);
-			break;
+			float x = M_Player->GetPos().x - M_BossBullet->GetDownPos(i).x;
+			float y = M_Player->GetPos().y - M_BossBullet->GetDownPos(i).y;
+			float z = sqrt(x * x + y * y);
+			float Sum = M_Player->GetRadiusX() + M_BossBullet->GetRadiusX();
+			if (z < Sum)
+			{
+				M_Player->TakeDamage(1);
+				M_BossBullet->SetDownFlg(i, false);
+				break;
+			}
 		}
 	}
 }
@@ -108,41 +117,50 @@ void C_Hit::EnemyHit()
 
 	for (int i = 0; i < M_BossBullet->GetEnemyNum(); ++i)
 	{
-		float x = M_Player->GetPos().x - M_BossBullet->GetPos(i).x;
-		float y = M_Player->GetPos().y - M_BossBullet->GetPos(i).y;
-		float z = sqrt(x * x + y * y);
-		float Sum = M_Player->GetRadiusX() + M_BossBullet->GetEnemyRadiusX();
-		if (z < Sum)
+		if (M_BossBullet->GetEnemyFlg(i) == true)
 		{
-			M_Player->TakeDamage(1);
-			M_BossBullet->SetEnemyFlg(i, false);
-			break;
+			float x = M_Player->GetPos().x - M_BossBullet->GetPos(i).x;
+			float y = M_Player->GetPos().y - M_BossBullet->GetPos(i).y;
+			float z = sqrt(x * x + y * y);
+			float Sum = M_Player->GetRadiusX() + M_BossBullet->GetEnemyRadiusX();
+			if (z < Sum)
+			{
+				M_Player->TakeDamage(1);
+				M_BossBullet->SetEnemyFlg(i, false);
+				break;
+			}
 		}
 	}
 	for (int i = 0; i < M_BossBullet->GetEnemyNum(); ++i)
 	{
-		float x = M_Player->GetPos().x - M_BossBullet->GetUpPos(i).x;
-		float y = M_Player->GetPos().y - M_BossBullet->GetUpPos(i).y;
-		float z = sqrt(x * x + y * y);
-		float Sum = M_Player->GetRadiusX() + M_BossBullet->GetEnemyRadiusX();
-		if (z < Sum)
+		if (M_BossBullet->GetEnemyUpFlg(i) == true)
 		{
-			M_Player->TakeDamage(1);
-			M_BossBullet->SetEnemyUpFlg(i, false);
-			break;
+			float x = M_Player->GetPos().x - M_BossBullet->GetUpPos(i).x;
+			float y = M_Player->GetPos().y - M_BossBullet->GetUpPos(i).y;
+			float z = sqrt(x * x + y * y);
+			float Sum = M_Player->GetRadiusX() + M_BossBullet->GetEnemyRadiusX();
+			if (z < Sum)
+			{
+				M_Player->TakeDamage(1);
+				M_BossBullet->SetEnemyUpFlg(i, false);
+				break;
+			}
 		}
 	}
 	for (int i = 0; i < M_BossBullet->GetEnemyNum(); ++i)
 	{
-		float x = M_Player->GetPos().x - M_BossBullet->GetDownPos(i).x;
-		float y = M_Player->GetPos().y - M_BossBullet->GetDownPos(i).y;
-		float z = sqrt(x * x + y * y);
-		float Sum = M_Player->GetRadiusX() + M_BossBullet->GetEnemyRadiusX();
-		if (z < Sum)
+		if (M_BossBullet->GetEnemyDownFlg(i) == true)
 		{
-			M_Player->TakeDamage(1);
-			M_BossBullet->SetEnemyDownFlg(i, false);
-			break;
+			float x = M_Player->GetPos().x - M_BossBullet->GetDownPos(i).x;
+			float y = M_Player->GetPos().y - M_BossBullet->GetDownPos(i).y;
+			float z = sqrt(x * x + y * y);
+			float Sum = M_Player->GetRadiusX() + M_BossBullet->GetEnemyRadiusX();
+			if (z < Sum)
+			{
+				M_Player->TakeDamage(1);
+				M_BossBullet->SetEnemyDownFlg(i, false);
+				break;
+			}
 		}
 	}
 }
@@ -157,41 +175,50 @@ void C_Hit::LastBossBulletHit()
 
 	for (int i = 0; i < M_BossBullet->GetLastBulletNum(); ++i)
 	{
-		float x = M_Player->GetPos().x - M_BossBullet->GetPos(i).x;
-		float y = M_Player->GetPos().y - M_BossBullet->GetPos(i).y;
-		float z = sqrt(x * x + y * y);
-		float Sum = M_Player->GetRadiusX() + M_BossBullet->GetRadiusX();
-		if (z < Sum)
+		if (M_BossBullet->GetLastFlg(i) == true)
 		{
-			M_Player->TakeDamage(1);
-			M_BossBullet->SetLastFlg(i, false);
-			break;
+			float x = M_Player->GetPos().x - M_BossBullet->GetPos(i).x;
+			float y = M_Player->GetPos().y - M_BossBullet->GetPos(i).y;
+			float z = sqrt(x * x + y * y);
+			float Sum = M_Player->GetRadiusX() + M_BossBullet->GetLastRadiusX();
+			if (z < Sum)
+			{
+				M_Player->TakeDamage(1);
+				M_BossBullet->SetLastFlg(i, false);
+				break;
+			}
 		}
 	}
 	for (int i = 0; i < M_BossBullet->GetLastBulletNum(); ++i)
 	{
-		float x = M_Player->GetPos().x - M_BossBullet->GetUpPos(i).x;
-		float y = M_Player->GetPos().y - M_BossBullet->GetUpPos(i).y;
-		float z = sqrt(x * x + y * y);
-		float Sum = M_Player->GetRadiusX() + M_BossBullet->GetRadiusX();
-		if (z < Sum)
+		if (M_BossBullet->GetLastUpFlg(i) == true)
 		{
-			M_Player->TakeDamage(1);
-			M_BossBullet->SetLastUpFlg(i, false);
-			break;
+			float x = M_Player->GetPos().x - M_BossBullet->GetUpPos(i).x;
+			float y = M_Player->GetPos().y - M_BossBullet->GetUpPos(i).y;
+			float z = sqrt(x * x + y * y);
+			float Sum = M_Player->GetRadiusX() + M_BossBullet->GetLastRadiusX();
+			if (z < Sum)
+			{
+				M_Player->TakeDamage(1);
+				M_BossBullet->SetLastUpFlg(i, false);
+				break;
+			}
 		}
 	}
 	for (int i = 0; i < M_BossBullet->GetLastBulletNum(); ++i)
 	{
-		float x = M_Player->GetPos().x - M_BossBullet->GetDownPos(i).x;
-		float y = M_Player->GetPos().y - M_BossBullet->GetDownPos(i).y;
-		float z = sqrt(x * x + y * y);
-		float Sum = M_Player->GetRadiusX() + M_BossBullet->GetRadiusX();
-		if (z < Sum)
+		if (M_BossBullet->GetLastDownFlg(i) == true)
 		{
-			M_Player->TakeDamage(1);
-			M_BossBullet->SetLastDownFlg(i, false);
-			break;
+			float x = M_Player->GetPos().x - M_BossBullet->GetDownPos(i).x;
+			float y = M_Player->GetPos().y - M_BossBullet->GetDownPos(i).y;
+			float z = sqrt(x * x + y * y);
+			float Sum = M_Player->GetRadiusX() + M_BossBullet->GetLastRadiusX();
+			if (z < Sum)
+			{
+				M_Player->TakeDamage(1);
+				M_BossBullet->SetLastDownFlg(i, false);
+				break;
+			}
 		}
 	}
 }

@@ -4,12 +4,18 @@
 void C_Enemy::Init()
 {
 	M_BossBullet = std::make_shared<C_BossBullet>();
-
+	
 	M_Tex.Load("Texture/Boss/SpaceShip_Boss.png");
+	
+	if (M_ChangeFlg == true)
+	{
+		M_Tex.Load("Texture/Boss/SpaceShip_BossLast.png");
+	}
+
 	M_EnemyTex.Load("Texture/Bullet/Enemy.png");
 	M_Pos = { 450,0 };
-	M_UpPos = { 450,130 };
-	M_DownPos = { 450,-130 };
+	M_UpPos = { 450,M_Pos.y + 130 };
+	M_DownPos = { 450,M_Pos.y - 130 };
 	M_Move = { 0,0 };
 	M_Alive = true;
 	M_ScaleX = 3.5F;
@@ -17,6 +23,7 @@ void C_Enemy::Init()
 	M_Radius = { 47.0f,47.0f };
 	M_Angle = 0;
 	M_Hp = 50;
+	M_ChangeFlg = false;
 	
 	for (int i = 0; i < EnemyNum; ++i)
 	{
@@ -32,6 +39,10 @@ void C_Enemy::Init()
 	M_Wait0 = 550;
 	M_Wait1 = 550;
 	M_Wait2 = 550;
+
+	M_WaitFlg0 = false;
+	M_WaitFlg1 = false;
+	M_WaitFlg2 = false;
 
 	M_BossBullet->Init();
 	M_BossBullet->SetOwner(this);
@@ -64,6 +75,30 @@ void C_Enemy::Update()
 		M_Angle -= 360;
 	}
 
+	if (M_State == 0)
+	{
+		M_WaitFlg0 = true;
+		M_WaitFlg1 = false;
+		M_WaitFlg2 = false;
+	}
+	else if (M_State == 1)
+	{
+		M_WaitFlg0 = false;
+		M_WaitFlg1 = true;
+		M_WaitFlg2 = false;
+	}
+	else if (M_State == 2)
+	{
+		M_WaitFlg0 = false;
+		M_WaitFlg1 = false;
+		M_WaitFlg2 = true;
+	}
+
+	if (M_Hp <= 10)
+	{
+		M_ChangeFlg = true;
+	}
+
 	m_alpha += m_addAlpha;
 
 	// 無敵時間のカウントダウン
@@ -76,7 +111,7 @@ void C_Enemy::Update()
 			M_InvincibleTime = 0.0f;
 		}
 	}
-
+	
 	M_ScaleMat = Math::Matrix::CreateScale(M_ScaleX, M_ScaleY, 1.0F);
 	M_RotationMat = Math::Matrix::CreateRotationZ(DirectX::XMConvertToRadians(M_Angle)); //回転行列
 	M_TransMat = Math::Matrix::CreateTranslation(M_Pos.x, M_Pos.y, 0);
@@ -96,9 +131,12 @@ void C_Enemy::Update()
 void C_Enemy::Draw()
 {
 	if (!M_Alive)return;
-	SHADER.m_spriteShader.SetMatrix(M_Mat);
-	SHADER.m_spriteShader.DrawTex(&M_Tex, Math::Rectangle{ 0,0,110,110 }, m_alpha);
-
+	
+	if (M_ChangeFlg == false || M_ChangeFlg == true)
+	{
+		SHADER.m_spriteShader.SetMatrix(M_Mat);
+		SHADER.m_spriteShader.DrawTex(&M_Tex, Math::Rectangle{ 0,0,110,110 }, m_alpha);
+	}
 	for (int i = 0; i < EnemyNum; ++i)
 	{
 		if (M_EnemyFlg[i] == true)
@@ -137,80 +175,98 @@ void C_Enemy::Action()
 	switch (M_State)
 	{
 	case 0:
-		M_BossBullet->BossAction0();
-		M_Wait0--;
-		if (M_Wait0 < 0)
+		if (M_WaitFlg0 == true)
 		{
-			M_Wait0 = 0;
-		}
-		if (M_Wait0 == 0)
-		{
-			if (M_State == 0) { M_State = 1; }
+			M_BossBullet->BossAction0();
+			M_Wait0--;
+			if (M_Wait0 < 0)
+			{
+				M_Wait0 = 0;
+			}
+			if (M_Wait0 == 0)
+			{
+				if (M_State == 0) 
+				{
+					M_State = 1;
+					M_Pos.y = 0;
+				}
+				
+			}
 		}
 		break;
 
 	case 1:
-		M_BossBullet->BossAction1();
-		M_Wait1--;
-		if (M_Wait1 < 0)
+		if (M_WaitFlg1 == true)
 		{
-			M_Wait1 = 0;
-		}
-
-		if (M_Wait1 < 450)
-		{
-			M_EnemyMove.y = 5.0f;
-			for (int i = 0; i < EnemyNum; ++i)
+			M_BossBullet->BossAction1();
+			M_Wait1--;
+			if (M_Wait1 < 0)
 			{
-				if (M_EnemyWait <= 0)
+				M_Wait1 = 0;
+			}
+
+			if (M_Wait1 < 450)
+			{
+				M_EnemyMove.y = 5.0f;
+				for (int i = 0; i < EnemyNum; ++i)
 				{
-					if (M_EnemyFlg[i] == false)
+					if (M_EnemyWait <= 0)
 					{
-						M_EnemyFlg[i] = true;
-						M_EnemyWait = 10;		//待機時間10フレーム
+						if (M_EnemyFlg[i] == false)
+						{
+							M_EnemyFlg[i] = true;
+							M_EnemyWait = 10;		//待機時間10フレーム
+						}
 					}
 				}
-			}
-			
-			//敵の発射待機時間
-			M_EnemyWait--;
-			if (M_EnemyWait <= 0)
-			{
-				M_EnemyWait = 0;
-			}
-		}
 
-		if (M_Wait1 == 0)
-		{
-			if (M_State == 1) { M_State = 2; }
+				//敵の発射待機時間
+				M_EnemyWait--;
+				if (M_EnemyWait <= 0)
+				{
+					M_EnemyWait = 0;
+				}
+			}
+
+			if (M_Wait1 == 0)
+			{
+				if (M_State == 1)
+				{ 
+					M_State = 2; 
+					M_Pos.y = 0;
+				}
+			}
 		}
 		break;
 
 	case 2:
-		M_BossBullet->BossAction2();
-		for (int i = 0; i < EnemyNum; ++i)
+		if (M_WaitFlg2 == true)
 		{
-			M_EnemyFlg[i] = false;
-		}
+			M_BossBullet->BossAction2();
+			for (int i = 0; i < EnemyNum; ++i)
+			{
+				M_EnemyFlg[i] = false;
+			}
 
-		M_Wait2--;
-		if (M_Wait2 < 0)
-		{
-			M_Wait2 = 0;
-		}
-		if (M_Wait2 == 0)
-		{
-			if (M_State == 2) { M_State = 0; }
-			M_Wait0 = 550;
+			M_Wait2--;
+			if (M_Wait2 < 0)
+			{
+				M_Wait2 = 0;
+			}
+			if (M_Wait2 == 0)
+			{
+				if (M_State == 2) 
+				{
+					//M_State = 0; 
+					M_Pos.y = 0;
+					M_Wait0 = 550;
+				}
+			}
 		}
 		break;
 
 	case 3:
 		M_BossBullet->BossAction3();
-		break;
-
-	case 4:
-		M_BossBullet->BossAction4();
 		break;
 
 	default:
@@ -219,7 +275,8 @@ void C_Enemy::Action()
 	
 	if (M_Hp == 10)
 	{
-		M_State = 4;
+		M_State = 3;
+
 	}
 
 }
