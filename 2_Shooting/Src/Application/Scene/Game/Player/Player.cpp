@@ -41,6 +41,11 @@ void C_Player::Update()
 
 	Action();
 
+	if (GetAsyncKeyState('H') & 0x8000)
+	{
+		M_Hp = 100;
+	}
+
 	// 座標確定処理
 	M_Pos += M_Move;
 

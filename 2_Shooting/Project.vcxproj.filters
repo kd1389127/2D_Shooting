@@ -76,6 +76,9 @@
     <Filter Include="Src\Application\Scene\GameOver">
       <UniqueIdentifier>{038ab09e-44e2-43b8-8e98-2df3945493d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Scene\Result\Score">
+      <UniqueIdentifier>{6aa23a2b-cab8-4875-b2d3-9fbc417389f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -207,6 +210,9 @@
     <ClInclude Include="Src\Application\Scene\GameOver\GameOverScene.h">
       <Filter>Src\Application\Scene\GameOver</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Scene\Result\Score\Score.h">
+      <Filter>Src\Application\Scene\Result\Score</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -307,6 +313,9 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Scene\GameOver\GameOverScene.cpp">
       <Filter>Src\Application\Scene\GameOver</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Scene\Result\Score\Score.cpp">
+      <Filter>Src\Application\Scene\Result\Score</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -28,6 +28,7 @@ public:
 private:
 	Math::Matrix	M_BackGroundMat1;
 	Math::Matrix	M_BackGroundMat2;
+	Math::Color		M_Color;
 	KdTexture M_BackGroundTex;
 
 	//プレイヤー

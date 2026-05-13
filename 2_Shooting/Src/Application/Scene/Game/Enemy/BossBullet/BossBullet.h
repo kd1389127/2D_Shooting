@@ -63,7 +63,7 @@ private:
 
 	static const int BulletNum = 100;
 	static const int EnemyNum = 200;
-	static const int LastBulletNum = 5;
+	static const int LastBulletNum = 50;
 
 	KdTexture		M_Tex;
 	KdTexture		M_EnemyTex;
@@ -116,6 +116,8 @@ private:
 	int M_LastShotTime;	//後隙
 
 	int state;		//現在の状態
+
+	float AnimCnt;
 
 	C_Enemy* M_Owner = nullptr;
 };

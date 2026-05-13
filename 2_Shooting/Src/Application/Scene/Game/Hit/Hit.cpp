@@ -183,7 +183,7 @@ void C_Hit::LastBossBulletHit()
 			float Sum = M_Player->GetRadiusX() + M_BossBullet->GetLastRadiusX();
 			if (z < Sum)
 			{
-				M_Player->TakeDamage(1);
+				M_Player->TakeDamage(3);
 				M_BossBullet->SetLastFlg(i, false);
 				break;
 			}
@@ -199,7 +199,7 @@ void C_Hit::LastBossBulletHit()
 			float Sum = M_Player->GetRadiusX() + M_BossBullet->GetLastRadiusX();
 			if (z < Sum)
 			{
-				M_Player->TakeDamage(1);
+				M_Player->TakeDamage(3);
 				M_BossBullet->SetLastUpFlg(i, false);
 				break;
 			}
@@ -215,7 +215,7 @@ void C_Hit::LastBossBulletHit()
 			float Sum = M_Player->GetRadiusX() + M_BossBullet->GetLastRadiusX();
 			if (z < Sum)
 			{
-				M_Player->TakeDamage(1);
+				M_Player->TakeDamage(3);
 				M_BossBullet->SetLastDownFlg(i, false);
 				break;
 			}

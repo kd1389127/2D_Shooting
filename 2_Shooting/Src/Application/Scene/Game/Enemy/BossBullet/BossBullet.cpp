@@ -44,10 +44,12 @@ void C_BossBullet::Init()
 	//敵の弾の発射待機時間
 	M_ShotWait = 0;
 	M_ShotTime = 300;
-	M_EnemyShotTime = 200;
-	M_LastShotTime = 150;
+	M_EnemyShotTime = 300;
+	M_LastShotTime = 100;
 
 	state = 0;
+
+	AnimCnt = 0;
 }
 
 void C_BossBullet::Update()
@@ -108,6 +110,14 @@ void C_BossBullet::Update()
 		M_TransMat = Math::Matrix::CreateTranslation(M_BulletDownPos[i].x, M_BulletDownPos[i].y, 0);
 		M_LastBulletDownMat[i] = M_ScaleMat * M_TransMat;	// 拡大×移動
 	}
+
+	AnimCnt += 0.1f;  //アニメーションを次のコマへ進める
+
+	//終了チェック
+	if (AnimCnt > 4)
+	{
+		AnimCnt = 0;
+	}
 }
 
 void C_BossBullet::Draw()
@@ -117,17 +127,17 @@ void C_BossBullet::Draw()
 		if (M_BulletFlg[i] == true)
 		{
 			SHADER.m_spriteShader.SetMatrix(M_BulletMat[i]);
-			SHADER.m_spriteShader.DrawTex(&M_Tex, Math::Rectangle{ 0,0,16,16 }, 1.0f);
+			SHADER.m_spriteShader.DrawTex(&M_Tex, Math::Rectangle{ (int)AnimCnt * 16,0,16,16 }, 1.0f);
 		}
 		if (M_BulletUpFlg[i] == true)
 		{
 			SHADER.m_spriteShader.SetMatrix(M_BulletUpMat[i]);
-			SHADER.m_spriteShader.DrawTex(&M_Tex, Math::Rectangle{ 0,0,16,16 }, 1.0f);
+			SHADER.m_spriteShader.DrawTex(&M_Tex, Math::Rectangle{ (int)AnimCnt * 16,0,16,16 }, 1.0f);
 		}
 		if (M_BulletDownFlg[i] == true)
 		{
 			SHADER.m_spriteShader.SetMatrix(M_BulletDownMat[i]);
-			SHADER.m_spriteShader.DrawTex(&M_Tex, Math::Rectangle{ 0,0,16,16 }, 1.0f);
+			SHADER.m_spriteShader.DrawTex(&M_Tex, Math::Rectangle{ (int)AnimCnt * 16,0,16,16 }, 1.0f);
 		}
 	}
 
@@ -354,9 +364,9 @@ void C_BossBullet::BossAction2()
 
 	//後隙
 	M_EnemyShotTime--;
-	if (M_EnemyShotTime <= -200)
+	if (M_EnemyShotTime <= -300)
 	{
-		M_EnemyShotTime = 200;
+		M_EnemyShotTime = 300;
 	}
 }
 
@@ -368,7 +378,6 @@ void C_BossBullet::BossAction3()
 		if (M_BulletUpFlg[i] == true) { M_BulletUpFlg[i] = false; }
 		if (M_BulletDownFlg[i] == true) { M_BulletDownFlg[i] = false; }
 	}
-
 	for (int i = 0; i < EnemyNum; ++i)
 	{
 		if (M_EnemyFlg[i] == true) { M_EnemyFlg[i] = false; }
@@ -403,7 +412,7 @@ void C_BossBullet::BossAction3()
 				M_LastBulletUpFlg[i] = true;	//発射状態に
 				M_LastBulletDownFlg[i] = true;	//発射状態に
 
-				M_ShotWait = 15;		//待機時間15フレーム
+				M_ShotWait = 10;		//待機時間10フレーム
 
 				break;	//1発「発射状態」にしたので弾の繰り返しを抜ける
 			}
@@ -419,9 +428,9 @@ void C_BossBullet::BossAction3()
 
 	//後隙
 	M_LastShotTime--;
-	if (M_LastShotTime <= -150)
+	if (M_LastShotTime <= -100)
 	{
-		M_LastShotTime = 150;
+		M_LastShotTime = 100;
 	}
 }
 

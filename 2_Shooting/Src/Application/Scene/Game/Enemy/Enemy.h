@@ -30,6 +30,7 @@ public:
 	bool GetDamageFlg() { return M_DamageFlg; }
 	std::shared_ptr<C_BossBullet> GetBossBullet() { return M_BossBullet; }
 
+	float Rnd();
 private:
 	//弾
 	std::shared_ptr<C_BossBullet> M_BossBullet = nullptr;

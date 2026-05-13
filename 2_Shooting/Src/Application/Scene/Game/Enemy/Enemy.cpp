@@ -63,6 +63,27 @@ void C_Enemy::Update()
 		}
 	}
 
+	if (GetAsyncKeyState('1') & 0x8000)
+	{
+		M_State = 0;
+		M_Wait0 = 550;
+	}
+	if (GetAsyncKeyState('2') & 0x8000)
+	{
+		M_State = 1;
+		M_Wait1 = 550;
+	}
+	if (GetAsyncKeyState('3') & 0x8000)
+	{
+		M_State = 2;
+		M_Wait2 = 550;
+	}
+
+	if (GetAsyncKeyState('Y') & 0x8000)
+	{
+		M_Hp = 10;
+	}
+
 	Action();
 	M_BossBullet->Update();
 
@@ -75,25 +96,7 @@ void C_Enemy::Update()
 		M_Angle -= 360;
 	}
 
-	if (M_State == 0)
-	{
-		M_WaitFlg0 = true;
-		M_WaitFlg1 = false;
-		M_WaitFlg2 = false;
-	}
-	else if (M_State == 1)
-	{
-		M_WaitFlg0 = false;
-		M_WaitFlg1 = true;
-		M_WaitFlg2 = false;
-	}
-	else if (M_State == 2)
-	{
-		M_WaitFlg0 = false;
-		M_WaitFlg1 = false;
-		M_WaitFlg2 = true;
-	}
-
+	
 	if (M_Hp <= 10)
 	{
 		M_ChangeFlg = true;
@@ -188,9 +191,12 @@ void C_Enemy::Action()
 				if (M_State == 0) 
 				{
 					M_State = 1;
-					M_Pos.y = 0;
-				}
-				
+					M_Wait1 = 550;
+					for (int i = 0; i < EnemyNum; ++i)
+					{
+						M_EnemyFlg[i] = false;
+					}
+				}	
 			}
 		}
 		break;
@@ -233,7 +239,7 @@ void C_Enemy::Action()
 				if (M_State == 1)
 				{ 
 					M_State = 2; 
-					M_Pos.y = 0;
+					M_Wait2 = 550;
 				}
 			}
 		}
@@ -257,8 +263,7 @@ void C_Enemy::Action()
 			{
 				if (M_State == 2) 
 				{
-					//M_State = 0; 
-					M_Pos.y = 0;
+					M_State = 0;
 					M_Wait0 = 550;
 				}
 			}
@@ -272,13 +277,22 @@ void C_Enemy::Action()
 	default:
 		break;
 	}
-	
+
+	if (M_State == 0){M_WaitFlg0 = true;}
+	else{M_WaitFlg0 = false;}
+
+	if (M_State == 1){M_WaitFlg1 = true;}
+	else { M_WaitFlg1 = false; }
+
+	if (M_State == 2){M_WaitFlg2 = true;}
+	else { M_WaitFlg2 = false; }
+
 	if (M_Hp == 10)
 	{
 		M_State = 3;
-
 	}
 
+	
 }
 
 void C_Enemy::TakeDamage(int dmg)
@@ -305,4 +319,9 @@ void C_Enemy::TakeDamage(int dmg)
 	M_IsInvincible = true;
 	M_InvincibleTime = 1.0f; // 1秒間無敵
 
+}
+
+float C_Enemy::Rnd()
+{
+	return rand() / (float)RAND_MAX;
 }

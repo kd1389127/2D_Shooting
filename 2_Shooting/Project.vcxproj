@@ -171,6 +171,7 @@
     <ClInclude Include="Src\Application\Scene\Game\Player\Player.h" />
     <ClInclude Include="Src\Application\Scene\Game\Player\PlayerBullet\PlayerBullet.h" />
     <ClInclude Include="Src\Application\Scene\Result\ResultScene.h" />
+    <ClInclude Include="Src\Application\Scene\Result\Score\Score.h" />
     <ClInclude Include="Src\Application\Scene\SceneManager.h" />
     <ClInclude Include="Src\Application\Scene\Title\TitleScene.h" />
     <ClInclude Include="Src\System\Audio\KdAudio.h" />
@@ -208,6 +209,7 @@
     <ClCompile Include="Src\Application\Scene\Game\Player\Player.cpp" />
     <ClCompile Include="Src\Application\Scene\Game\Player\PlayerBullet\PlayerBullet.cpp" />
     <ClCompile Include="Src\Application\Scene\Result\ResultScene.cpp" />
+    <ClCompile Include="Src\Application\Scene\Result\Score\Score.cpp" />
     <ClCompile Include="Src\Application\Scene\SceneManager.cpp" />
     <ClCompile Include="Src\Application\Scene\Title\TitleScene.cpp" />
     <ClCompile Include="Src\System\Audio\KdAudio.cpp" />

@@ -11,19 +11,18 @@ void GameScene::Init()
 	M_Hit = std::make_shared<C_Hit>();
 
 	M_BackGroundTex.Load("Texture/BackGround/Game/Game.png");
-	M_Player->Init();
 	M_Enemy->Init();
+	M_Player->Init();
 	M_Hit->SetOwner(this);
 }
 
 void GameScene::Update()
 {
+	M_Enemy->Update();
+
 	M_Player->Update();
 
-	M_Enemy->Update();
-	
 	Hit();
-	
 	
 	if (M_Enemy->GetAlive() == false)
 	{
@@ -31,6 +30,20 @@ void GameScene::Update()
 	}
 
 	if (M_Player->GetAlive() == false)
+	{
+		SceneManager::Instance().SetNextScene(SceneManager::SceneType::GameOver);
+	}
+
+	//デバックキー
+	if (GetAsyncKeyState('T') & 0x8000)
+	{
+		SceneManager::Instance().SetNextScene(SceneManager::SceneType::Title);
+	}
+	if (GetAsyncKeyState('R') & 0x8000)
+	{
+		SceneManager::Instance().SetNextScene(SceneManager::SceneType::Result);
+	}
+	if (GetAsyncKeyState('G') & 0x8000)
 	{
 		SceneManager::Instance().SetNextScene(SceneManager::SceneType::GameOver);
 	}
@@ -54,11 +67,18 @@ void GameScene::Draw()
 	SHADER.m_spriteShader.SetMatrix(M_BackGroundMat2);
 	SHADER.m_spriteShader.DrawTex(&M_BackGroundTex, Math::Rectangle{ 0,0,1280,720 }, 1.0F);
 	
+	//エネミー
+	M_Enemy->Draw();
+
 	//プレイヤー
 	M_Player->Draw();
 
-	//エネミー
-	M_Enemy->Draw();
+	//Bossの体力
+	char Hp[200];
+
+	sprintf_s(Hp, sizeof(Hp), "BOSS HP : %d", M_Enemy->GetHP());
+
+	SHADER.m_spriteShader.DrawString(340, -310, Hp, Math::Vector4(1.0f, 1.0f, 1.0f, 1));
 }
 
 void GameScene::Release()
